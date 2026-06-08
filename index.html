@@ -196,17 +196,7 @@ tbody tr:hover td{background:var(--grayl)}
     </div>
     <div id="lal"></div>
     <div class="fg"><label>Your name</label>
-      <select id="lname">
-        <option value="">Select your name...</option>
-        <option>Justin</option>
-        <option>Verdi</option>
-        <option>Tan Kee Tong</option>
-        <option>Hardian</option>
-        <option>Chai Zhi Ying</option>
-        <option>Dinesh</option>
-        <option>Surrendar</option>
-        <option>Test</option>
-      </select>
+      <input type="text" id="lname" placeholder="Enter your full name e.g. Tan Kee Tong" />
     </div>
     <div class="fg"><label>Password</label>
       <input type="password" id="lpass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
@@ -365,7 +355,7 @@ var ROLES={
 
 /* ── AUTH ── */
 async function doLogin(){
-  var name=document.getElementById('lname').value;
+  var name=document.getElementById('lname').value.trim();
   var pass=document.getElementById('lpass').value;
   var al=document.getElementById('lal');
   if(!name||!pass){al.innerHTML='<div class="al ald">Please select your name and enter password.</div>';return;}
