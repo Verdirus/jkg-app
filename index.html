@@ -19,7 +19,7 @@
 }
 body{font-family:Arial,sans-serif;font-size:14px;color:var(--black);background:var(--grayl);min-height:100vh}
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.lbox{background:var(--white);border:1px solid var(--graym);border-radius:16px;padding:32px;width:100%;max-width:400px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.lbox{background:var(--white);border:1px solid var(--graym);border-radius:16px;padding:32px;width:100%;max-width:420px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
 .lhead{text-align:center;margin-bottom:24px}
 .llogo{font-size:22px;font-weight:700;color:var(--red);letter-spacing:1px}
 .lsub{font-size:12px;color:var(--gray);margin-top:4px}
@@ -27,7 +27,7 @@ body{font-family:Arial,sans-serif;font-size:14px;color:var(--black);background:v
 .fg label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .fg input,.fg select{width:100%;padding:10px 12px;border:1.5px solid var(--graym);border-radius:var(--r);font-size:13px;font-family:Arial,sans-serif;background:var(--white);color:var(--black);outline:none;transition:border-color .15s}
 .fg input:focus,.fg select:focus{border-color:var(--blue)}
-.al{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:12px}
+.al{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:12px;line-height:1.5}
 .ald{background:var(--redl);color:var(--red);border:1px solid #fcc}
 .als{background:var(--greenl);color:var(--green);border:1px solid #b6dfc8}
 .ali{background:var(--bluel);color:var(--blue);border:1px solid #b8ccf0}
@@ -36,15 +36,15 @@ body{font-family:Arial,sans-serif;font-size:14px;color:var(--black);background:v
 .btnp{background:var(--blue);color:#fff;border-color:var(--blue)}.btnp:hover{background:var(--blue2)}
 .btng{background:var(--green);color:#fff;border-color:var(--green)}
 .btnr{background:var(--red);color:#fff;border-color:var(--red)}
-.btnbl{width:100%;justify-content:center}
+.btnbl{width:100%;justify-content:center;margin-bottom:8px}
 .btnsm{padding:5px 10px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 #app{display:none;min-height:100vh;flex-direction:column}
 .topbar{background:var(--blue);color:#fff;height:52px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:100}
-.tlogo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.5px}
+.tlogo{font-size:13px;font-weight:700;color:#fff}
 .ttitle{font-size:12px;color:#ccd6f0;flex:1}
-.tuser{font-size:12px;opacity:.8;display:flex;align-items:center;gap:10px}
-.tbtn{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer;background:transparent;font-family:Arial,sans-serif}
+.tuser{font-size:12px;opacity:.8;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tbtn{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer;background:transparent;font-family:Arial,sans-serif;white-space:nowrap}
 .tbtn:hover{background:rgba(255,255,255,.12)}
 .layout{display:flex;flex:1;min-height:calc(100vh - 52px)}
 .sidebar{width:200px;background:var(--white);border-right:1px solid var(--graym);padding:10px 0;flex-shrink:0}
@@ -91,8 +91,6 @@ tbody tr:hover td{background:var(--grayl)}
 .clwrap td{padding:8px 10px;border-bottom:1px solid var(--graym);vertical-align:middle}
 .clwrap td.pm-col{background:var(--goldl);border-left:2px solid var(--gold)}
 .clwrap .secrow td{background:var(--grayl);font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;padding:6px 10px}
-.clwrap tbody tr:hover td{background:#fafaf8}
-.clwrap tbody tr:hover td.pm-col{background:#fffce0}
 .numcol{width:32px;text-align:center;color:var(--gray);font-size:11px;font-weight:700}
 .rg{display:flex;border:1px solid var(--graym);border-radius:var(--r);overflow:hidden;width:fit-content}
 .rb{padding:4px 10px;font-size:11px;font-weight:700;border:none;background:transparent;cursor:pointer;color:var(--gray);border-right:1px solid var(--graym);font-family:Arial,sans-serif}
@@ -107,7 +105,6 @@ tbody tr:hover td{background:var(--grayl)}
 .rmk{border:1px solid var(--graym);border-radius:var(--r);padding:5px 8px;font-size:11px;width:140px;font-family:Arial,sans-serif;background:var(--white);color:var(--black);outline:none}
 .rmk:focus{border-color:var(--blue)}
 .clf{display:flex;align-items:center;justify-content:space-between;padding:14px 0 0;border-top:2px solid var(--graym);margin-top:8px;flex-wrap:wrap;gap:12px}
-.clinfo{font-size:13px;color:var(--gray);font-weight:600}
 .score-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin:10px 0}
 .sc-box{border-radius:var(--r);padding:8px 10px;text-align:center;border:1px solid var(--graym)}
 .sc-lbl{font-size:9px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
@@ -116,8 +113,6 @@ tbody tr:hover td{background:var(--grayl)}
 .lbrow:last-child{border-bottom:none}
 .lbrank{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
 .r1{background:#fef3c7;color:#92400e}.r2{background:#f1f5f9;color:#475569}.r3{background:var(--redl);color:var(--red)}
-.lbname{font-size:14px;font-weight:700;flex:1}
-.lbsub{font-size:11px;color:var(--gray)}
 .chip{display:inline-block;padding:3px 10px;border-radius:100px;font-size:12px;border:1px solid var(--graym);color:var(--gray);background:var(--grayl)}
 .empty{text-align:center;padding:48px 20px;color:var(--gray)}
 .eico{font-size:38px;margin-bottom:8px;opacity:.3}
@@ -125,10 +120,10 @@ tbody tr:hover td{background:var(--grayl)}
 .esub{font-size:12px;margin-top:4px}
 .sep{height:1px;background:var(--graym);margin:14px 0}
 .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.loading{text-align:center;padding:40px;color:var(--gray);font-size:13px}
 .form-section{background:var(--bluel);border-radius:var(--r);padding:8px 14px;font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
 .proj-info{font-size:12px;color:var(--gray);margin-bottom:12px;line-height:1.8}
 .proj-info span{font-weight:700;color:var(--black)}
+.sync-bar{background:#1a3f8b;color:#fff;padding:8px 16px;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -140,13 +135,30 @@ tbody tr:hover td{background:var(--grayl)}
       <div class="lsub">Site Work Progress Checklist</div>
     </div>
     <div id="lal"></div>
-    <div class="fg"><label>Your name</label>
-      <input type="text" id="lname" placeholder="Enter your full name" />
+    <div class="fg">
+      <label>Your name</label>
+      <select id="lname">
+        <option value="">— Select your name —</option>
+        <option value="Justin">Justin</option>
+        <option value="Verdi">Verdi</option>
+        <option value="Tan Kee Tong">Tan Kee Tong</option>
+        <option value="Hardian">Hardian</option>
+        <option value="Chai Zhi Ying">Chai Zhi Ying</option>
+        <option value="Dinesh">Dinesh</option>
+        <option value="Surrendar">Surrendar</option>
+        <option value="Test">Test</option>
+      </select>
     </div>
-    <div class="fg"><label>Password</label>
+    <div class="fg">
+      <label>Password</label>
       <input type="password" id="lpass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
     </div>
     <button class="btn btnp btnbl" onclick="doLogin()">Sign in</button>
+    <div style="background:var(--bluel);border-radius:var(--r);padding:12px;font-size:12px;color:var(--blue);line-height:1.7;margin-top:4px">
+      <strong>Note:</strong> Each device stores data locally.<br>
+      Use <strong>Export / Import</strong> to sync data between devices.<br>
+      Default password = your name (e.g. <strong>Dinesh</strong>)
+    </div>
   </div>
 </div>
 
@@ -156,62 +168,24 @@ tbody tr:hover td{background:var(--grayl)}
     <span class="ttitle">Site Work Progress Checklist</span>
     <div class="tuser">
       <span id="tinfo"></span>
-      <button class="tbtn" onclick="nav('change-password')">🔒 Change password</button>
+      <button class="tbtn" onclick="nav('change-password')">🔒 Password</button>
+      <button class="tbtn" onclick="exportData()">📤 Export</button>
+      <button class="tbtn" onclick="document.getElementById('import-file').click()">📥 Import</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)" />
       <button class="tbtn" onclick="doLogout()">Sign out</button>
     </div>
   </div>
   <div class="layout">
     <div class="sidebar" id="sidebar"></div>
-    <div class="main" id="mc"><div class="loading">Loading...</div></div>
+    <div class="main" id="mc"></div>
   </div>
 </div>
 
 <script>
-/* ── GITHUB STORAGE ── */
-const GH_OWNER='Verdirus';
-const GH_REPO='jkg-app';
-var GH_TOKEN=localStorage.getItem('jkg_gh_token')||'';
-const GH_API='https://api.github.com';
-var GH_HEADS={'Authorization':'Bearer '+GH_TOKEN,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+/* ══ STORAGE ══ */
+function gd(k){try{return JSON.parse(localStorage.getItem('jkg_'+k))||null}catch(e){return null}}
+function sd(k,v){localStorage.setItem('jkg_'+k,JSON.stringify(v))}
 
-function initToken(){
-  if(!GH_TOKEN){
-    var t=prompt('Enter GitHub token to enable data saving (ask your admin):');
-    if(t){GH_TOKEN=t;localStorage.setItem('jkg_gh_token',t);GH_HEADS['Authorization']='Bearer '+t;}
-  }
-}
-
-var _shas={};
-
-async function ghRead(path){
-  try{
-    /* Use raw URL for reading - no auth needed, no CORS issues */
-    var raw='https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/data/'+path+'?t='+Date.now();
-    var r=await fetch(raw);
-    if(!r.ok)return null;
-    var data=await r.json();
-    /* Also get SHA for writing later */
-    try{
-      var api=await fetch(GH_API+'/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/data/'+path,{headers:GH_HEADS});
-      if(api.ok){var d=await api.json();if(d.sha)_shas[path]=d.sha;}
-    }catch(e){}
-    return data;
-  }catch(e){return null;}
-}
-
-async function ghWrite(path,data){
-  try{
-    var content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
-    var body={message:'Update '+path,content:content};
-    if(_shas[path])body.sha=_shas[path];
-    var r=await fetch(GH_API+'/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/data/'+path,{method:'PUT',headers:GH_HEADS,body:JSON.stringify(body)});
-    var d=await r.json();
-    if(d.content)_shas[path]=d.content.sha;
-    return r.ok;
-  }catch(e){return false;}
-}
-
-/* ── DEFAULT DATA ── */
 var DEFAULT_USERS=[
   {name:'Justin',       role:'director', password:'Justin'},
   {name:'Verdi',        role:'admin',    password:'Verdi'},
@@ -223,20 +197,47 @@ var DEFAULT_USERS=[
   {name:'Test',         role:'supervisor',password:'Test'}
 ];
 
-async function getUsers(){var d=await ghRead('users.json');return d||DEFAULT_USERS;}
-async function saveUsers(u){return ghWrite('users.json',u);}
-async function getProjects(){var d=await ghRead('projects.json');return d||[];}
-async function saveProjects(p){return ghWrite('projects.json',p);}
-async function getSubs(){var d=await ghRead('submissions.json');return d||[];}
-async function saveSubs(s){return ghWrite('submissions.json',s);}
+function getUsers(){return gd('users')||DEFAULT_USERS}
+function saveUsers(u){sd('users',u)}
+function getProjects(){return gd('projects')||[]}
+function saveProjects(p){sd('projects',p)}
+function getSubs(){return gd('subs')||[]}
+function saveSubs(s){sd('subs',s)}
 
-/* ── CHECKLIST DATA ── */
+/* ══ EXPORT / IMPORT ══ */
+function exportData(){
+  var data={users:getUsers(),projects:getProjects(),subs:getSubs(),exported:new Date().toISOString()};
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='jkg-data-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+
+function importData(input){
+  if(!input.files.length)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      if(data.users)saveUsers(data.users);
+      if(data.projects)saveProjects(data.projects);
+      if(data.subs)saveSubs(data.subs);
+      alert('✅ Data imported successfully! Page will reload.');
+      location.reload();
+    }catch(err){alert('❌ Invalid file. Please use a valid JKG export file.');}
+  };
+  reader.readAsText(input.files[0]);
+  input.value='';
+}
+
+/* ══ CHECKLIST DATA ══ */
 var CATS=[
   {id:'flooring',name:'Flooring work',sections:[
     {s:'Screeding work',items:['Ensure all elements are covered by screeding, with sufficient allowance to receive the floor finishes material.','Ensure the quantity and location of floor electrical points is installed according to the drawing.','Ensure the floor traps and electrical metal boxes are covered before screeding to prevent debris. (e.g. use a rubber plug)','Ensure the quantity and location of water inlet/outlet points is installed according to the drawing.']},
-    {s:'Floor finishes installation',items:['Ensure the floor finishes material specification are according to the drawing.','Ensure the starting point location, pattern, and direction of floor finishes is installed according to the drawing.','Ensure the floor is level after floor finishes are installed. (e.g. surface is flat, no uneven joints)','Ensure to provide openings on the floor finishes material as needed.','Ensure the floor finishes material is in good condition. (e.g. no chips, no damage)','Ensure the floor grouting color code are according to the drawing.','Ensure the floor trap cover finishes is installed according to the drawing.','Ensure to install a rubber plug stopper for unused floor traps.']},
+    {s:'Floor finishes installation',items:['Ensure the floor finishes material specification are according to the drawing.','Ensure the starting point location, pattern, and direction of floor finishes is installed according to the drawing.','Ensure the floor is level after floor finishes are installed.','Ensure to provide openings on the floor finishes material as needed.','Ensure the floor finishes material is in good condition. (e.g. no chips, no damage)','Ensure the floor grouting color code are according to the drawing.','Ensure the floor trap cover finishes is installed according to the drawing.','Ensure to install a rubber plug stopper for unused floor traps.']},
     {s:'Termination',items:['Ensure the termination of "flooring to flooring" is installed according to the drawing.']},
-    {s:'Cover floor protection',items:['Ensure the floor is cleaned before covering the protection sheets.','Ensure the protection sheets stick securely to prevent scratches and damage to the floor finishes.']}
+    {s:'Cover floor protection',items:['Ensure the floor is cleaned before covering the protection sheets.','Ensure the protection sheets stick securely to prevent scratches and damage.']}
   ]},
   {id:'waterproofing',name:'Waterproofing work',sections:[
     {s:'Waterproofing',items:['Ensure the kerb has an allowance to hold min. 50mm depth of water for the water ponding test.','Ensure the waterproofing material specification are according to mall requirements.','Ensure waterproofing material is applied to the kerb upturn, wall upturn, and floor trap downturn to a depth of 50mm.','Ensure to install a barricade to prevent people steps in or debris falls after waterproofing material is applied.','Ensure the non-drill areas of the waterproofed sections are marked to prevent damage during work.']},
@@ -307,20 +308,20 @@ var CATS=[
 
 function totalItems(cat){var n=0;for(var i=0;i<cat.sections.length;i++)n+=cat.sections[i].items.length;return n;}
 
+/* ══ STATE ══ */
 var S={user:null,role:null,page:'dashboard',proj:null,cat:null,sub:null,cldata:{}};
 
-/* ── AUTH ── */
-async function doLogin(){
-  initToken();
-  var name=document.getElementById('lname').value.trim();
+/* ══ AUTH ══ */
+function doLogin(){
+  var name=document.getElementById('lname').value;
   var pass=document.getElementById('lpass').value;
   var al=document.getElementById('lal');
-  if(!name||!pass){al.innerHTML='<div class="al ald">Please enter your name and password.</div>';return;}
-  al.innerHTML='<div class="al ali">Signing in...</div>';
-  var users=await getUsers();
-  var u=users.find(function(x){return x.name.toLowerCase()===name.toLowerCase();});
-  if(!u){al.innerHTML='<div class="al ald">User "'+name+'" not found. Please check your name.</div>';return;}
-  if(u.password!==pass){al.innerHTML='<div class="al ald">Incorrect password.</div>';return;}
+  if(!name||!pass){al.innerHTML='<div class="al ald">Please select your name and enter password.</div>';return;}
+  var users=getUsers();
+  var u=null;
+  for(var i=0;i<users.length;i++){if(users[i].name===name){u=users[i];break;}}
+  if(!u){al.innerHTML='<div class="al ald">User not found.</div>';return;}
+  if(u.password!==pass){al.innerHTML='<div class="al ald">Incorrect password. Default password is your name.</div>';return;}
   S.user=u.name;S.role=u.role;
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='flex';
@@ -337,7 +338,7 @@ function doLogout(){
   document.getElementById('lname').value='';
 }
 
-/* ── NAV ── */
+/* ══ NAV ══ */
 var NAVMAP={
   supervisor:[{id:'dashboard',lbl:'Dashboard'},{id:'my-projects',lbl:'My projects'},{id:'fill-checklist',lbl:'Fill checklist'}],
   pm:[{id:'dashboard',lbl:'Dashboard'},{id:'new-project',lbl:'New project'},{id:'all-projects',lbl:'All projects'},{id:'review',lbl:'Review submissions'},{id:'reports',lbl:'Reports'}],
@@ -362,23 +363,22 @@ function nav(page,ctx){
 
 function render(){
   var mc=document.getElementById('mc');
-  mc.innerHTML='<div class="loading">⏳ Loading...</div>';
   var p=S.page;
-  if(p==='dashboard')pgDash().then(function(h){mc.innerHTML=h;});
-  else if(p==='my-projects')pgMyProjects().then(function(h){mc.innerHTML=h;});
-  else if(p==='fill-checklist')pgFillChecklist().then(function(h){mc.innerHTML=h;});
-  else if(p==='checklist')pgChecklist().then(function(h){mc.innerHTML=h;});
-  else if(p==='new-project'){mc.innerHTML=pgNewProject();}
-  else if(p==='all-projects')pgAllProjects().then(function(h){mc.innerHTML=h;});
-  else if(p==='review')pgReview().then(function(h){mc.innerHTML=h;});
-  else if(p==='leaderboard')pgLeaderboard().then(function(h){mc.innerHTML=h;});
-  else if(p==='reports')pgReports().then(function(h){mc.innerHTML=h;});
-  else if(p==='manage-users')pgManageUsers().then(function(h){mc.innerHTML=h;});
-  else if(p==='change-password'){mc.innerHTML=pgChangePassword();}
+  if(p==='dashboard')mc.innerHTML=pgDash();
+  else if(p==='my-projects')mc.innerHTML=pgMyProjects();
+  else if(p==='fill-checklist')mc.innerHTML=pgFillChecklist();
+  else if(p==='checklist')mc.innerHTML=pgChecklist();
+  else if(p==='new-project')mc.innerHTML=pgNewProject();
+  else if(p==='all-projects')mc.innerHTML=pgAllProjects();
+  else if(p==='review')mc.innerHTML=pgReview();
+  else if(p==='leaderboard')mc.innerHTML=pgLeaderboard();
+  else if(p==='reports')mc.innerHTML=pgReports();
+  else if(p==='manage-users')mc.innerHTML=pgManageUsers();
+  else if(p==='change-password')mc.innerHTML=pgChangePw();
   else mc.innerHTML='<div class="empty"><div class="etxt">Page not found</div></div>';
 }
 
-/* ── HELPERS ── */
+/* ══ HELPERS ══ */
 function today(){return new Date().toISOString().slice(0,10);}
 function fmtDate(d){if(!d)return'—';try{var dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return d;}}
 function roleLabel(r){return{supervisor:'Site Supervisor',pm:'Project Manager',admin:'Admin / HOD',director:'Project Director'}[r]||r;}
@@ -389,32 +389,31 @@ function getScore(sub){
 }
 function scCls(s){return s>=90?'cg':s>=70?'ca':'cr';}
 function pfCls(s){return s>=90?'pfg':s>=70?'pfa':'pfr';}
-function bdgCls(st){return{approved:'bg',pending:'bw',returned:'br',draft:'bn'}[st]||'bn';}
 function catName(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i].name;return id;}
 function findCat(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i];return null;}
 
-/* ── DASHBOARD ── */
-async function pgDash(){
-  var projs=await getProjects();
-  var subs=await getSubs();
-  if(S.role==='supervisor')subs=subs.filter(function(s){return s.supervisor===S.user;});
-  else if(S.role==='pm')subs=subs.filter(function(s){return projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;}).indexOf(s.project)>=0;});
-  var total=subs.length;
-  var avg=total?Math.round(subs.reduce(function(a,s){return a+getScore(s);},0)/total):0;
-  var pending=subs.filter(function(s){return s.status==='pending';}).length;
-  var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
+/* ══ DASHBOARD ══ */
+function pgDash(){
+  var projs=getProjects();var subs=getSubs();
+  var mySubs=S.role==='supervisor'?subs.filter(function(s){return s.supervisor===S.user;}):
+    S.role==='pm'?subs.filter(function(s){return projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;}).indexOf(s.project)>=0;}):subs;
+  var total=mySubs.length;
+  var avg=total?Math.round(mySubs.reduce(function(a,s){return a+getScore(s);},0)/total):0;
+  var pending=mySubs.filter(function(s){return s.status==='pending';}).length;
+  var fc=mySubs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
   var h='<div class="ph"><div class="ptitle">Dashboard</div>';
   if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
   if(S.role==='supervisor')h+='<button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button>';
   h+='</div>';
+  h+='<div class="al ali" style="margin-bottom:16px">💡 <strong>Sync tip:</strong> Use <strong>📤 Export</strong> to save data, and <strong>📥 Import</strong> on other devices to sync. PM exports after reviewing, supervisor imports to see updates.</div>';
   h+='<div class="mgrid">';
   h+='<div class="met"><div class="mlbl">Projects</div><div class="mval cb">'+projs.length+'</div></div>';
   h+='<div class="met"><div class="mlbl">Submissions</div><div class="mval cb">'+total+'</div></div>';
   h+='<div class="met"><div class="mlbl">Avg score</div><div class="mval '+scCls(avg)+'">'+avg+'%</div></div>';
   h+='<div class="met"><div class="mlbl">Pending review</div><div class="mval ca">'+pending+'</div></div>';
-  h+='<div class="met"><div class="mlbl">Fail+Cost flags</div><div class="mval cr">'+fc+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Fail+Cost</div><div class="mval cr">'+fc+'</div></div>';
   h+='</div>';
-  h+='<div class="card"><div class="ctitle">Recent projects</div>';
+  h+='<div class="card"><div class="ctitle">Projects</div>';
   if(!projs.length)h+='<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
   else{
     h+='<div class="tw"><table><thead><tr><th>Project</th><th>Location</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Status</th></tr></thead><tbody>';
@@ -432,21 +431,20 @@ async function pgDash(){
   return h;
 }
 
-/* ── MY PROJECTS ── */
-async function pgMyProjects(){
-  var projs=await getProjects();
-  var subs=await getSubs();
+/* ══ MY PROJECTS ══ */
+function pgMyProjects(){
+  var projs=getProjects();var subs=getSubs();
   var mine=projs.filter(function(p){return p.supervisor===S.user;});
   var h='<div class="ph"><div class="ptitle">My projects</div><button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button></div>';
-  if(!mine.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div><div class="esub">Ask your PM to assign you to a project.</div></div>';
+  if(!mine.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div><div class="esub">Ask your PM to create a project and assign you.</div></div>';
   mine.forEach(function(p){
     var ps=subs.filter(function(s){return s.project===p.name&&s.supervisor===S.user;});
     var done=ps.filter(function(s){return s.status!=='draft';}).length;
     var pct=Math.round(done/12*100);
     h+='<div class="card"><div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">';
     h+='<div style="font-size:15px;font-weight:700">'+p.name+'</div><span class="chip">'+done+'/12 done</span></div>';
-    h+='<div class="proj-info">📍 <span>'+(p.location||'—')+'</span> &nbsp;|&nbsp; 👷 PM: <span>'+(p.pm||'—')+'</span> &nbsp;|&nbsp; 📅 Takeover: <span>'+fmtDate(p.takeover_date)+'</span> &nbsp;|&nbsp; 🏁 Handover: <span>'+fmtDate(p.handover_date)+'</span></div>';
-    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="pb" style="flex:1"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:12px;font-weight:700;color:var(--gray)">'+pct+'% complete</span></div>';
+    h+='<div class="proj-info">📍 <span>'+(p.location||'—')+'</span> &nbsp;|&nbsp; PM: <span>'+(p.pm||'—')+'</span> &nbsp;|&nbsp; Takeover: <span>'+fmtDate(p.takeover_date)+'</span> &nbsp;|&nbsp; Handover: <span>'+fmtDate(p.handover_date)+'</span></div>';
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="pb" style="flex:1"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:12px;font-weight:700;color:var(--gray)">'+pct+'%</span></div>';
     h+='<div class="catgrid">';
     CATS.forEach(function(cat){
       var sub=null;var draft=null;
@@ -467,9 +465,9 @@ async function pgMyProjects(){
   return h;
 }
 
-/* ── FILL CHECKLIST ── */
-async function pgFillChecklist(){
-  var projs=await getProjects();
+/* ══ FILL CHECKLIST ══ */
+function pgFillChecklist(){
+  var projs=getProjects();
   var mine=projs.filter(function(p){return p.supervisor===S.user;});
   var h='<div class="ph"><div class="ptitle">Fill checklist</div></div>';
   if(!mine.length)return h+'<div class="card"><div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div></div></div>';
@@ -495,17 +493,19 @@ function goChecklist(){
   openChecklist(proj,catid);
 }
 
-async function openChecklist(proj,catid){
-  document.getElementById('mc').innerHTML='<div class="loading">⏳ Loading checklist...</div>';
-  var subs=await getSubs();
-  var existing=subs.find(function(s){return s.project===proj&&s.category===catid&&s.supervisor===S.user;});
+function openChecklist(proj,catid){
+  var subs=getSubs();
+  var existing=null;
+  for(var i=0;i<subs.length;i++){
+    if(subs[i].project===proj&&subs[i].category===catid&&subs[i].supervisor===S.user){existing=subs[i];break;}
+  }
   S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
   S.sub=existing||null;
   nav('checklist',{proj:proj,cat:catid});
 }
 
-/* ── CHECKLIST PAGE ── */
-async function pgChecklist(){
+/* ══ CHECKLIST ══ */
+function pgChecklist(){
   var cat=findCat(S.cat);
   if(!cat)return'<div class="empty"><div class="etxt">Category not found.</div></div>';
   var existing=S.sub;
@@ -513,22 +513,22 @@ async function pgChecklist(){
   var isPM=(S.role==='pm'||S.role==='admin');
   var h='<div class="back" onclick="nav(\'my-projects\')">&#8592; Back to my projects</div>';
   h+='<div class="ph"><div><div class="ptitle">'+cat.name+'</div>';
-  h+='<div style="font-size:12px;color:var(--gray);margin-top:2px">Project: <strong>'+S.proj+'</strong> &nbsp;|&nbsp; Supervisor: <strong>'+S.user+'</strong></div></div></div>';
+  h+='<div style="font-size:12px;color:var(--gray);margin-top:2px">Project: <strong>'+S.proj+'</strong> &nbsp;|&nbsp; Supervisor: <strong>'+(S.sub?S.sub.supervisor:S.user)+'</strong></div></div></div>';
   if(submitted){
     h+='<div class="al '+(existing.status==='approved'?'als':existing.status==='returned'?'ald':'ali')+'" style="margin-bottom:14px">';
-    h+='Status: <strong>'+(existing.status==='approved'?'✅ Approved':existing.status==='returned'?'⚠️ Returned by PM — please recheck and resubmit':'⏳ Pending PM review')+'</strong>';
+    h+='Status: <strong>'+(existing.status==='approved'?'✅ Approved':existing.status==='returned'?'⚠️ Returned — please recheck and resubmit':'⏳ Pending PM review')+'</strong>';
     if(existing.status==='returned'&&existing.pm_comment)h+='<br>PM comment: <em>'+existing.pm_comment+'</em>';
     h+='</div>';
     if(existing.status==='returned')h+='<div style="margin-bottom:12px"><button class="btn btnp btnsm" onclick="reOpenChecklist()">Re-open &amp; resubmit</button></div>';
   }
   h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:12px">';
-  h+='<div style="background:var(--bluel);border:1px solid var(--bluem);border-radius:6px;padding:5px 12px;color:var(--blue)"><strong>Supervisor fills:</strong> Check &nbsp;|&nbsp; Remarks</div>';
+  h+='<div style="background:var(--bluel);border:1px solid var(--bluem);border-radius:6px;padding:5px 12px;color:var(--blue)"><strong>Supervisor fills:</strong> Check (Yes/N/A) &nbsp;|&nbsp; Remarks</div>';
   h+='<div style="background:var(--goldl);border:1px solid var(--gold);border-radius:6px;padding:5px 12px;color:var(--goldd)"><strong>PM fills:</strong> Pass &nbsp;|&nbsp; Fail &nbsp;|&nbsp; Fail+Cost</div>';
   h+='</div>';
   h+='<div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="clwrap"><thead><tr>';
   h+='<th class="numcol">No.</th><th style="min-width:220px">Description</th>';
   h+='<th style="min-width:100px">Check</th><th style="min-width:150px">Remarks</th>';
-  h+='<th class="pm-col" style="min-width:140px">Pass (PM)</th>';
+  h+='<th class="pm-col" style="min-width:160px">Pass (PM)</th>';
   h+='</tr></thead><tbody>';
   var idx=0;
   cat.sections.forEach(function(sec){
@@ -571,11 +571,11 @@ async function pgChecklist(){
   h+='<div class="sc-box"><div class="sc-lbl">Answered</div><div class="sc-val cb">'+chk_c+'/'+totalItems(cat)+'</div></div>';
   h+='</div>';
   if(!submitted){
-    h+='<div class="clf"><div class="clinfo">'+chk_c+' / '+totalItems(cat)+' items answered</div>';
-    h+='<div style="display:flex;gap:8px"><button class="btn btnsm" id="draft-btn" onclick="saveDraft(this)">💾 Save draft</button>';
-    h+='<button class="btn btnp btnsm" id="submit-btn" onclick="submitCL(this)">✓ Submit checklist</button></div></div>';
+    h+='<div class="clf"><div style="font-size:13px;color:var(--gray);font-weight:600">'+chk_c+' / '+totalItems(cat)+' items answered</div>';
+    h+='<div style="display:flex;gap:8px"><button class="btn btnsm" onclick="saveDraft(this)">💾 Save draft</button>';
+    h+='<button class="btn btnp btnsm" onclick="submitCL(this)">✓ Submit checklist</button></div></div>';
   } else if(isPM&&existing.status==='pending'){
-    h+='<div class="clf"><div class="clinfo">Fill Pass column above, then approve or reject.</div>';
+    h+='<div class="clf"><div style="font-size:13px;color:var(--gray)">Fill Pass column above, then approve or reject.</div>';
     h+='<div style="display:flex;gap:8px">';
     h+='<button class="btn btnsm" onclick="pmSave()">💾 Save</button>';
     h+='<button class="btn btng btnsm" onclick="pmApprove()">✓ Approve</button>';
@@ -589,9 +589,6 @@ async function pgChecklist(){
 function setCheck(k,val,btn){
   if(!S.cldata[k])S.cldata[k]={};S.cldata[k].check=val;
   btn.closest('.rg').querySelectorAll('.rb').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');
-  var chk_c=Object.keys(S.cldata).filter(function(k){return S.cldata[k]&&S.cldata[k].check;}).length;
-  var info=document.querySelector('.clinfo');
-  if(info)info.textContent=chk_c+' / '+totalItems(findCat(S.cat))+' items answered';
 }
 function setRemark(k,val){if(!S.cldata[k])S.cldata[k]={};S.cldata[k].remarks=val;}
 function setPM(k,val,btn){
@@ -605,59 +602,34 @@ function setPM(k,val,btn){
   if(boxes.length>=4){boxes[0].textContent=score+'%';boxes[0].className='sc-val '+scCls(score);boxes[1].textContent=pass_c;boxes[2].textContent=fail_c;boxes[3].textContent=fc_c;}
 }
 
-async function saveSub(status,extra){
-  var subs=await getSubs();
-  var idx=subs.findIndex(function(s){return s.project===S.proj&&s.category===S.cat&&s.supervisor===S.user;});
-  var sub=Object.assign({project:S.proj,category:S.cat,supervisor:S.user,status:status,items:S.cldata,updated_at:today()},extra||{});
-  if(idx>=0)subs[idx]=sub;else subs.push(sub);
-  await saveSubs(subs);
-  S.sub=sub;
-  return sub;
+function saveSub(status,extra){
+  var subs=getSubs();
+  var found=false;
+  var sub=Object.assign({project:S.proj,category:S.cat,supervisor:S.sub?S.sub.supervisor:S.user,status:status,items:S.cldata,updated_at:today()},extra||{});
+  for(var i=0;i<subs.length;i++){
+    if(subs[i].project===S.proj&&subs[i].category===S.cat&&subs[i].supervisor===(S.sub?S.sub.supervisor:S.user)){subs[i]=sub;found=true;break;}
+  }
+  if(!found)subs.push(sub);
+  saveSubs(subs);S.sub=sub;
 }
 
-async function saveDraft(btn){
-  btn.textContent='Saving...';btn.disabled=true;
-  await saveSub('draft');
-  btn.textContent='Saved!';setTimeout(function(){btn.textContent='💾 Save draft';btn.disabled=false;},2000);
-}
-
-async function submitCL(btn){
+function saveDraft(btn){btn.textContent='Saved!';saveSub('draft');setTimeout(function(){btn.textContent='💾 Save draft';},2000);}
+function submitCL(btn){
   var cat=findCat(S.cat);
   var ans=Object.keys(S.cldata).filter(function(k){return S.cldata[k]&&S.cldata[k].check;}).length;
   if(ans<totalItems(cat)&&!confirm('Only '+ans+'/'+totalItems(cat)+' items answered. Submit anyway?'))return;
-  btn.textContent='Submitting...';btn.disabled=true;
-  await saveSub('pending',{submitted_at:today()});
-  nav('checklist',{proj:S.proj,cat:S.cat});
+  saveSub('pending',{submitted_at:today()});nav('checklist',{proj:S.proj,cat:S.cat});
 }
-
-async function reOpenChecklist(){
-  await saveSub('draft',{pm_comment:null});
-  nav('checklist',{proj:S.proj,cat:S.cat});
-}
-
-async function pmSave(){
-  var subs=await getSubs();
-  var idx=subs.findIndex(function(s){return s.project===S.proj&&s.category===S.cat&&s.supervisor===(S.sub?S.sub.supervisor:S.user);});
-  if(idx>=0){subs[idx].items=S.cldata;await saveSubs(subs);alert('Saved!');}
-}
-
-async function pmApprove(){
-  var subs=await getSubs();
-  var idx=subs.findIndex(function(s){return s.id===S.sub.id||(s.project===S.proj&&s.category===S.cat&&s.supervisor===S.sub.supervisor);});
-  if(idx>=0){subs[idx].items=S.cldata;subs[idx].status='approved';await saveSubs(subs);}
-  nav('review');
-}
-
-async function pmReject(){
-  var comment=prompt('Reason for rejection (will be shown to supervisor):');
+function reOpenChecklist(){saveSub('draft',{pm_comment:null});openChecklist(S.proj,S.cat);}
+function pmSave(){saveSub('pending');alert('Saved!');}
+function pmApprove(){saveSub('approved');nav('review');}
+function pmReject(){
+  var comment=prompt('Reason for rejection (shown to supervisor):');
   if(comment===null)return;
-  var subs=await getSubs();
-  var idx=subs.findIndex(function(s){return s.project===S.proj&&s.category===S.cat&&s.supervisor===S.sub.supervisor;});
-  if(idx>=0){subs[idx].items=S.cldata;subs[idx].status='returned';subs[idx].pm_comment=comment;await saveSubs(subs);}
-  nav('review');
+  saveSub('returned',{pm_comment:comment});nav('review');
 }
 
-/* ── NEW PROJECT ── */
+/* ══ NEW PROJECT ══ */
 function pgNewProject(){
   return'<div class="ph"><div class="ptitle">New project</div></div>'+
   '<div class="card" style="max-width:580px">'+
@@ -667,8 +639,7 @@ function pgNewProject(){
   '<div class="twocol">'+
   '<div class="fg"><label>Takeover date *</label><input type="date" id="pf-take" /></div>'+
   '<div class="fg"><label>Handover date *</label><input type="date" id="pf-hand" /></div>'+
-  '</div>'+
-  '<div class="sep"></div>'+
+  '</div><div class="sep"></div>'+
   '<div class="form-section">Team assignment</div>'+
   '<div class="twocol">'+
   '<div class="fg"><label>Project manager *</label><select id="pf-pm"><option value="">Select PM...</option><option>Tan Kee Tong</option><option>Hardian</option><option>Chai Zhi Ying</option></select></div>'+
@@ -681,7 +652,7 @@ function pgNewProject(){
   '</div></div>';
 }
 
-async function saveProject(){
+function saveProject(){
   var name=document.getElementById('pf-name').value.trim();
   var loc=document.getElementById('pf-loc').value.trim();
   var take=document.getElementById('pf-take').value;
@@ -690,24 +661,21 @@ async function saveProject(){
   var sup=document.getElementById('pf-sup').value;
   var al=document.getElementById('pf-al');
   if(!name||!loc||!take||!hand||!pm||!sup){al.innerHTML='<div class="al ald">Please fill in all required fields.</div>';return;}
-  al.innerHTML='<div class="al ali">Creating project...</div>';
-  var projs=await getProjects();
-  if(projs.find(function(p){return p.name===name;})){al.innerHTML='<div class="al ald">A project with this name already exists.</div>';return;}
+  var projs=getProjects();
+  if(projs.find(function(p){return p.name===name;})){al.innerHTML='<div class="al ald">Project name already exists.</div>';return;}
   projs.push({name:name,location:loc,takeover_date:take,handover_date:hand,pm:pm,supervisor:sup,status:'active',created:today()});
-  var ok=await saveProjects(projs);
-  if(ok)nav('all-projects');
-  else al.innerHTML='<div class="al ald">Failed to save. Please try again.</div>';
+  saveProjects(projs);
+  nav('all-projects');
 }
 
-/* ── ALL PROJECTS ── */
-async function pgAllProjects(){
-  var projs=await getProjects();
-  var subs=await getSubs();
+/* ══ ALL PROJECTS ══ */
+function pgAllProjects(){
+  var projs=getProjects();var subs=getSubs();
   var h='<div class="ph"><div class="ptitle">All projects</div>';
   if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
   h+='</div>';
   if(!projs.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
-  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project name</th><th>Location</th><th>PM</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Avg score</th><th>Status</th></tr></thead><tbody>';
+  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project name</th><th>Location</th><th>PM</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Avg score</th></tr></thead><tbody>';
   projs.slice().reverse().forEach(function(p){
     var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
     var av=ps.length?Math.round(ps.reduce(function(a,s){return a+getScore(s);},0)/ps.length):0;
@@ -715,24 +683,22 @@ async function pgAllProjects(){
     h+='<tr><td style="font-weight:700">'+p.name+'</td><td>'+(p.location||'—')+'</td><td>'+(p.pm||'—')+'</td><td>'+(p.supervisor||'—')+'</td>';
     h+='<td>'+fmtDate(p.takeover_date)+'</td><td>'+fmtDate(p.handover_date)+'</td>';
     h+='<td><div style="display:flex;align-items:center;gap:6px"><div class="pb" style="width:70px"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:var(--gray)">'+ps.length+'/12</span></div></td>';
-    h+='<td>'+(ps.length?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'—')+'</td>';
-    h+='<td><span class="bdg '+(p.status==='active'?'bg':'bn')+'">'+(p.status||'active')+'</span></td></tr>';
+    h+='<td>'+(ps.length?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'—')+'</td></tr>';
   });
   h+='</tbody></table></div></div>';
   return h;
 }
 
-/* ── REVIEW ── */
-async function pgReview(){
-  var allSubs=await getSubs();
-  var pending=allSubs.filter(function(s){return s.status==='pending';});
+/* ══ REVIEW ══ */
+function pgReview(){
+  var subs=getSubs();var projs=getProjects();
+  var pending=subs.filter(function(s){return s.status==='pending';});
   if(S.role==='pm'){
-    var projs=await getProjects();
     var myP=projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;});
     pending=pending.filter(function(s){return myP.indexOf(s.project)>=0;});
   }
   var h='<div class="ph"><div class="ptitle">Review submissions</div><span class="chip">'+pending.length+' pending</span></div>';
-  if(!pending.length)return h+'<div class="empty"><div class="eico">✅</div><div class="etxt">No pending submissions</div><div class="esub">All submissions have been reviewed.</div></div>';
+  if(!pending.length)return h+'<div class="empty"><div class="eico">✅</div><div class="etxt">No pending submissions</div></div>';
   h+='<div class="card"><div class="tw"><table><thead><tr><th>Project</th><th>Category</th><th>Supervisor</th><th>Score</th><th>Fail</th><th>Fail+Cost</th><th>Date</th><th>Action</th></tr></thead><tbody>';
   pending.forEach(function(s){
     var items=s.items||{};var keys=Object.keys(items);
@@ -750,19 +716,18 @@ async function pgReview(){
   return h;
 }
 
-async function openReview(proj,catid,supervisor){
-  document.getElementById('mc').innerHTML='<div class="loading">⏳ Loading...</div>';
-  var subs=await getSubs();
-  var existing=subs.find(function(s){return s.project===proj&&s.category===catid&&s.supervisor===supervisor;});
+function openReview(proj,catid,supervisor){
+  var subs=getSubs();
+  var existing=null;
+  for(var i=0;i<subs.length;i++){if(subs[i].project===proj&&subs[i].category===catid&&subs[i].supervisor===supervisor){existing=subs[i];break;}}
   S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
   S.sub=existing||null;
   nav('checklist',{proj:proj,cat:catid});
 }
 
-/* ── LEADERBOARD ── */
-async function pgLeaderboard(){
-  var subs=await getSubs();
-  subs=subs.filter(function(s){return s.status==='approved'||s.status==='pending';});
+/* ══ LEADERBOARD ══ */
+function pgLeaderboard(){
+  var subs=getSubs().filter(function(s){return s.status==='approved'||s.status==='pending';});
   var h='<div class="ph"><div class="ptitle">Supervisor leaderboard</div></div>';
   var map={};
   subs.forEach(function(s){
@@ -776,16 +741,15 @@ async function pgLeaderboard(){
     var rk=i===0?'r1':i===1?'r2':i===2?'r3':'';
     h+='<div class="lbrow"><div class="lbrank '+rk+'" style="background:'+(i>=3?'var(--grayl)':'')+'">'+( i+1)+'</div>';
     h+='<div style="flex:1"><div class="lbname">'+s.name+'</div><div class="lbsub">'+s.count+' submission'+(s.count!==1?'s':'')+'</div></div>';
-    h+='<div class="lbsc '+scCls(s.avg)+'">'+s.avg+'%</div></div>';
+    h+='<div style="font-size:22px;font-weight:700" class="'+scCls(s.avg)+'">'+s.avg+'%</div></div>';
   });
   h+='</div>';
   return h;
 }
 
-/* ── REPORTS ── */
-async function pgReports(){
-  var subs=await getSubs();
-  var projs=await getProjects();
+/* ══ REPORTS ══ */
+function pgReports(){
+  var subs=getSubs();var projs=getProjects();
   var total=subs.length;
   var approved=subs.filter(function(s){return s.status==='approved';}).length;
   var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
@@ -795,7 +759,7 @@ async function pgReports(){
   h+='<div class="met"><div class="mlbl">Total submissions</div><div class="mval cb">'+total+'</div></div>';
   h+='<div class="met"><div class="mlbl">Approved</div><div class="mval cg">'+approved+'</div></div>';
   h+='<div class="met"><div class="mlbl">Fail+Cost flags</div><div class="mval ca">'+fc+'</div></div>';
-  h+='<div class="met"><div class="mlbl">Fail items total</div><div class="mval cr">'+fails+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Fail items</div><div class="mval cr">'+fails+'</div></div>';
   h+='</div><div class="twocol">';
   h+='<div class="card"><div class="ctitle">Category performance</div>';
   var catData=[];
@@ -825,11 +789,11 @@ async function pgReports(){
   return h;
 }
 
-/* ── MANAGE USERS ── */
-async function pgManageUsers(){
-  var users=await getUsers();
+/* ══ MANAGE USERS ══ */
+function pgManageUsers(){
+  var users=getUsers();
   var h='<div class="ph"><div class="ptitle">Manage users</div></div>';
-  h+='<div class="card"><div class="ctitle">All users</div><div class="tw"><table><thead><tr><th>Name</th><th>Role</th></tr></thead><tbody>';
+  h+='<div class="card"><div class="ctitle">All users <span class="chip">'+users.length+'</span></div><div class="tw"><table><thead><tr><th>Name</th><th>Role</th></tr></thead><tbody>';
   users.forEach(function(u){h+='<tr><td style="font-weight:700">'+u.name+'</td><td><span class="bdg bi">'+roleLabel(u.role)+'</span></td></tr>';});
   h+='</tbody></table></div></div>';
   h+='<div class="card" style="max-width:400px"><div class="ctitle">Reset user password</div>';
@@ -838,31 +802,28 @@ async function pgManageUsers(){
   h+='</select></div>';
   h+='<div class="fg"><label>New password</label><input type="text" id="ru-pass" placeholder="Enter new password" /></div>';
   h+='<div id="ru-al"></div>';
-  h+='<button class="btn btnp" onclick="resetPw()">Reset password</button></div>';
+  h+='<button class="btn btnp" onclick="doResetPw()">Reset password</button></div>';
   return h;
 }
 
-async function resetPw(){
+function doResetPw(){
   var name=document.getElementById('ru-name').value;
   var pass=document.getElementById('ru-pass').value;
   var al=document.getElementById('ru-al');
   if(!name||!pass){al.innerHTML='<div class="al ald">Fill in both fields.</div>';return;}
-  al.innerHTML='<div class="al ali">Saving...</div>';
-  var users=await getUsers();
+  var users=getUsers();
   var idx=users.findIndex(function(u){return u.name===name;});
   if(idx<0){al.innerHTML='<div class="al ald">User not found.</div>';return;}
-  users[idx].password=pass;
-  var ok=await saveUsers(users);
-  if(ok)al.innerHTML='<div class="al als">✓ Password reset for '+name+'.</div>';
-  else al.innerHTML='<div class="al ald">Failed. Please try again.</div>';
+  users[idx].password=pass;saveUsers(users);
+  al.innerHTML='<div class="al als">✓ Password reset for '+name+'.</div>';
 }
 
-/* ── CHANGE PASSWORD ── */
-function pgChangePassword(){
+/* ══ CHANGE PASSWORD ══ */
+function pgChangePw(){
   return'<div class="ph"><div class="ptitle">Change password</div></div>'+
   '<div class="card" style="max-width:380px">'+
-  '<div class="fg"><label>Current password</label><input type="password" id="cp-cur" placeholder="Enter current password" /></div>'+
-  '<div class="fg"><label>New password</label><input type="password" id="cp-new" placeholder="Enter new password" /></div>'+
+  '<div class="fg"><label>Current password</label><input type="password" id="cp-cur" placeholder="Current password" /></div>'+
+  '<div class="fg"><label>New password</label><input type="password" id="cp-new" placeholder="New password" /></div>'+
   '<div class="fg"><label>Confirm new password</label><input type="password" id="cp-con" placeholder="Confirm new password" /></div>'+
   '<div id="cp-al"></div>'+
   '<div style="display:flex;gap:10px;margin-top:4px">'+
@@ -871,7 +832,7 @@ function pgChangePassword(){
   '</div></div>';
 }
 
-async function doChangePw(){
+function doChangePw(){
   var cur=document.getElementById('cp-cur').value;
   var nw=document.getElementById('cp-new').value;
   var con=document.getElementById('cp-con').value;
@@ -879,15 +840,11 @@ async function doChangePw(){
   if(!cur||!nw||!con){al.innerHTML='<div class="al ald">Please fill in all fields.</div>';return;}
   if(nw!==con){al.innerHTML='<div class="al ald">New passwords do not match.</div>';return;}
   if(nw.length<4){al.innerHTML='<div class="al ald">Password must be at least 4 characters.</div>';return;}
-  al.innerHTML='<div class="al ali">Updating...</div>';
-  var users=await getUsers();
+  var users=getUsers();
   var idx=users.findIndex(function(u){return u.name===S.user;});
-  if(idx<0){al.innerHTML='<div class="al ald">User not found.</div>';return;}
   if(users[idx].password!==cur){al.innerHTML='<div class="al ald">Current password is incorrect.</div>';return;}
-  users[idx].password=nw;
-  var ok=await saveUsers(users);
-  if(ok)al.innerHTML='<div class="al als">✓ Password updated successfully!</div>';
-  else al.innerHTML='<div class="al ald">Failed to update. Please try again.</div>';
+  users[idx].password=nw;saveUsers(users);
+  al.innerHTML='<div class="al als">✓ Password updated successfully!</div>';
 }
 </script>
 </body>
