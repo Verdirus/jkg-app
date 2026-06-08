@@ -36,15 +36,15 @@ body{font-family:Arial,sans-serif;font-size:14px;color:var(--black);background:v
 .btnp{background:var(--blue);color:#fff;border-color:var(--blue)}.btnp:hover{background:var(--blue2)}
 .btng{background:var(--green);color:#fff;border-color:var(--green)}
 .btnr{background:var(--red);color:#fff;border-color:var(--red)}
-.btnbl{width:100%;justify-content:center;margin-bottom:8px}
+.btnbl{width:100%;justify-content:center}
 .btnsm{padding:5px 10px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 #app{display:none;min-height:100vh;flex-direction:column}
 .topbar{background:var(--blue);color:#fff;height:52px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:100}
 .tlogo{font-size:13px;font-weight:700;color:#fff}
 .ttitle{font-size:12px;color:#ccd6f0;flex:1}
-.tuser{font-size:12px;opacity:.8;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.tbtn{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer;background:transparent;font-family:Arial,sans-serif;white-space:nowrap}
+.tuser{font-size:12px;opacity:.8;display:flex;align-items:center;gap:8px}
+.tbtn{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer;background:transparent;font-family:Arial,sans-serif}
 .tbtn:hover{background:rgba(255,255,255,.12)}
 .layout{display:flex;flex:1;min-height:calc(100vh - 52px)}
 .sidebar{width:200px;background:var(--white);border-right:1px solid var(--graym);padding:10px 0;flex-shrink:0}
@@ -123,7 +123,7 @@ tbody tr:hover td{background:var(--grayl)}
 .form-section{background:var(--bluel);border-radius:var(--r);padding:8px 14px;font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
 .proj-info{font-size:12px;color:var(--gray);margin-bottom:12px;line-height:1.8}
 .proj-info span{font-weight:700;color:var(--black)}
-.sync-bar{background:#1a3f8b;color:#fff;padding:8px 16px;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.loading{text-align:center;padding:40px;color:var(--gray);font-size:13px}
 </style>
 </head>
 <body>
@@ -139,14 +139,14 @@ tbody tr:hover td{background:var(--grayl)}
       <label>Your name</label>
       <select id="lname">
         <option value="">— Select your name —</option>
-        <option value="Justin">Justin</option>
-        <option value="Verdi">Verdi</option>
-        <option value="Tan Kee Tong">Tan Kee Tong</option>
-        <option value="Hardian">Hardian</option>
-        <option value="Chai Zhi Ying">Chai Zhi Ying</option>
-        <option value="Dinesh">Dinesh</option>
-        <option value="Surrendar">Surrendar</option>
-        <option value="Test">Test</option>
+        <option>Justin</option>
+        <option>Verdi</option>
+        <option>Tan Kee Tong</option>
+        <option>Hardian</option>
+        <option>Chai Zhi Ying</option>
+        <option>Dinesh</option>
+        <option>Surrendar</option>
+        <option>Test</option>
       </select>
     </div>
     <div class="fg">
@@ -154,11 +154,6 @@ tbody tr:hover td{background:var(--grayl)}
       <input type="password" id="lpass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
     </div>
     <button class="btn btnp btnbl" onclick="doLogin()">Sign in</button>
-    <div style="background:var(--bluel);border-radius:var(--r);padding:12px;font-size:12px;color:var(--blue);line-height:1.7;margin-top:4px">
-      <strong>Note:</strong> Each device stores data locally.<br>
-      Use <strong>Export / Import</strong> to sync data between devices.<br>
-      Default password = your name (e.g. <strong>Dinesh</strong>)
-    </div>
   </div>
 </div>
 
@@ -168,74 +163,49 @@ tbody tr:hover td{background:var(--grayl)}
     <span class="ttitle">Site Work Progress Checklist</span>
     <div class="tuser">
       <span id="tinfo"></span>
-      <button class="tbtn" onclick="nav('change-password')">🔒 Password</button>
-      <button class="tbtn" onclick="exportData()">📤 Export</button>
-      <button class="tbtn" onclick="document.getElementById('import-file').click()">📥 Import</button>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)" />
+      <button class="tbtn" onclick="nav('change-password')">🔒 Change password</button>
       <button class="tbtn" onclick="doLogout()">Sign out</button>
     </div>
   </div>
   <div class="layout">
     <div class="sidebar" id="sidebar"></div>
-    <div class="main" id="mc"></div>
+    <div class="main" id="mc"><div class="loading">Loading...</div></div>
   </div>
 </div>
 
 <script>
-/* ══ STORAGE ══ */
-function gd(k){try{return JSON.parse(localStorage.getItem('jkg_'+k))||null}catch(e){return null}}
-function sd(k,v){localStorage.setItem('jkg_'+k,JSON.stringify(v))}
+/* ══ SUPABASE ══ */
+var SB='https://vfdqqsegkwpbclyfdwcx.supabase.co';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZHFxc2Vna3dwYmNseWZkd2N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NzIwMjksImV4cCI6MjA5NjQ0ODAyOX0.jR0Z-vJoXsYaxStobRo7syTWQg8K0d4x7il8mY2wPBI';
+var SH={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};
 
-var DEFAULT_USERS=[
-  {name:'Justin',       role:'director', password:'Justin'},
-  {name:'Verdi',        role:'admin',    password:'Verdi'},
-  {name:'Tan Kee Tong', role:'pm',       password:'Tan Kee Tong'},
-  {name:'Hardian',      role:'pm',       password:'Hardian'},
-  {name:'Chai Zhi Ying',role:'pm',       password:'Chai Zhi Ying'},
-  {name:'Dinesh',       role:'supervisor',password:'Dinesh'},
-  {name:'Surrendar',    role:'supervisor',password:'Surrendar'},
-  {name:'Test',         role:'supervisor',password:'Test'}
-];
-
-function getUsers(){return gd('users')||DEFAULT_USERS}
-function saveUsers(u){sd('users',u)}
-function getProjects(){return gd('projects')||[]}
-function saveProjects(p){sd('projects',p)}
-function getSubs(){return gd('subs')||[]}
-function saveSubs(s){sd('subs',s)}
-
-/* ══ EXPORT / IMPORT ══ */
-function exportData(){
-  var data={users:getUsers(),projects:getProjects(),subs:getSubs(),exported:new Date().toISOString()};
-  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='jkg-data-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
+async function dbGet(table,query){
+  try{
+    var r=await fetch(SB+'/rest/v1/'+table+'?'+query,{headers:SH});
+    if(!r.ok)return[];
+    return await r.json();
+  }catch(e){console.error('dbGet error',e);return[];}
 }
-
-function importData(input){
-  if(!input.files.length)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var data=JSON.parse(e.target.result);
-      if(data.users)saveUsers(data.users);
-      if(data.projects)saveProjects(data.projects);
-      if(data.subs)saveSubs(data.subs);
-      alert('✅ Data imported successfully! Page will reload.');
-      location.reload();
-    }catch(err){alert('❌ Invalid file. Please use a valid JKG export file.');}
-  };
-  reader.readAsText(input.files[0]);
-  input.value='';
+async function dbPost(table,data){
+  try{
+    var r=await fetch(SB+'/rest/v1/'+table,{method:'POST',headers:Object.assign({'Prefer':'return=representation'},SH),body:JSON.stringify(data)});
+    if(!r.ok){var e=await r.text();console.error('dbPost error',e);return null;}
+    return await r.json();
+  }catch(e){console.error('dbPost error',e);return null;}
+}
+async function dbPatch(table,query,data){
+  try{
+    var r=await fetch(SB+'/rest/v1/'+table+'?'+query,{method:'PATCH',headers:Object.assign({'Prefer':'return=representation'},SH),body:JSON.stringify(data)});
+    if(!r.ok){var e=await r.text();console.error('dbPatch error',e);return null;}
+    return await r.json();
+  }catch(e){console.error('dbPatch error',e);return null;}
 }
 
 /* ══ CHECKLIST DATA ══ */
 var CATS=[
   {id:'flooring',name:'Flooring work',sections:[
     {s:'Screeding work',items:['Ensure all elements are covered by screeding, with sufficient allowance to receive the floor finishes material.','Ensure the quantity and location of floor electrical points is installed according to the drawing.','Ensure the floor traps and electrical metal boxes are covered before screeding to prevent debris. (e.g. use a rubber plug)','Ensure the quantity and location of water inlet/outlet points is installed according to the drawing.']},
-    {s:'Floor finishes installation',items:['Ensure the floor finishes material specification are according to the drawing.','Ensure the starting point location, pattern, and direction of floor finishes is installed according to the drawing.','Ensure the floor is level after floor finishes are installed.','Ensure to provide openings on the floor finishes material as needed.','Ensure the floor finishes material is in good condition. (e.g. no chips, no damage)','Ensure the floor grouting color code are according to the drawing.','Ensure the floor trap cover finishes is installed according to the drawing.','Ensure to install a rubber plug stopper for unused floor traps.']},
+    {s:'Floor finishes installation',items:['Ensure the floor finishes material specification are according to the drawing.','Ensure the starting point location, pattern, and direction of floor finishes is installed according to the drawing.','Ensure the floor is level after floor finishes are installed. (e.g. surface is flat, no uneven joints)','Ensure to provide openings on the floor finishes material as needed.','Ensure the floor finishes material is in good condition. (e.g. no chips, no damage)','Ensure the floor grouting color code are according to the drawing.','Ensure the floor trap cover finishes is installed according to the drawing.','Ensure to install a rubber plug stopper for unused floor traps.']},
     {s:'Termination',items:['Ensure the termination of "flooring to flooring" is installed according to the drawing.']},
     {s:'Cover floor protection',items:['Ensure the floor is cleaned before covering the protection sheets.','Ensure the protection sheets stick securely to prevent scratches and damage.']}
   ]},
@@ -312,16 +282,16 @@ function totalItems(cat){var n=0;for(var i=0;i<cat.sections.length;i++)n+=cat.se
 var S={user:null,role:null,page:'dashboard',proj:null,cat:null,sub:null,cldata:{}};
 
 /* ══ AUTH ══ */
-function doLogin(){
+async function doLogin(){
   var name=document.getElementById('lname').value;
   var pass=document.getElementById('lpass').value;
   var al=document.getElementById('lal');
   if(!name||!pass){al.innerHTML='<div class="al ald">Please select your name and enter password.</div>';return;}
-  var users=getUsers();
-  var u=null;
-  for(var i=0;i<users.length;i++){if(users[i].name===name){u=users[i];break;}}
-  if(!u){al.innerHTML='<div class="al ald">User not found.</div>';return;}
-  if(u.password!==pass){al.innerHTML='<div class="al ald">Incorrect password. Default password is your name.</div>';return;}
+  al.innerHTML='<div class="al ali">Signing in...</div>';
+  var users=await dbGet('users','name=eq.'+encodeURIComponent(name)+'&select=*');
+  if(!users||!users.length){al.innerHTML='<div class="al ald">User not found. Please check connection.</div>';return;}
+  var u=users[0];
+  if(u.password!==pass){al.innerHTML='<div class="al ald">Incorrect password. Default password = your name.</div>';return;}
   S.user=u.name;S.role=u.role;
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='flex';
@@ -363,18 +333,19 @@ function nav(page,ctx){
 
 function render(){
   var mc=document.getElementById('mc');
+  mc.innerHTML='<div class="loading">⏳ Loading...</div>';
   var p=S.page;
-  if(p==='dashboard')mc.innerHTML=pgDash();
-  else if(p==='my-projects')mc.innerHTML=pgMyProjects();
-  else if(p==='fill-checklist')mc.innerHTML=pgFillChecklist();
-  else if(p==='checklist')mc.innerHTML=pgChecklist();
-  else if(p==='new-project')mc.innerHTML=pgNewProject();
-  else if(p==='all-projects')mc.innerHTML=pgAllProjects();
-  else if(p==='review')mc.innerHTML=pgReview();
-  else if(p==='leaderboard')mc.innerHTML=pgLeaderboard();
-  else if(p==='reports')mc.innerHTML=pgReports();
-  else if(p==='manage-users')mc.innerHTML=pgManageUsers();
-  else if(p==='change-password')mc.innerHTML=pgChangePw();
+  if(p==='dashboard')pgDash().then(function(h){mc.innerHTML=h;});
+  else if(p==='my-projects')pgMyProjects().then(function(h){mc.innerHTML=h;});
+  else if(p==='fill-checklist')pgFillChecklist().then(function(h){mc.innerHTML=h;});
+  else if(p==='checklist')pgChecklist().then(function(h){mc.innerHTML=h;});
+  else if(p==='new-project'){mc.innerHTML=pgNewProject();}
+  else if(p==='all-projects')pgAllProjects().then(function(h){mc.innerHTML=h;});
+  else if(p==='review')pgReview().then(function(h){mc.innerHTML=h;});
+  else if(p==='leaderboard')pgLeaderboard().then(function(h){mc.innerHTML=h;});
+  else if(p==='reports')pgReports().then(function(h){mc.innerHTML=h;});
+  else if(p==='manage-users')pgManageUsers().then(function(h){mc.innerHTML=h;});
+  else if(p==='change-password'){mc.innerHTML=pgChangePw();}
   else mc.innerHTML='<div class="empty"><div class="etxt">Page not found</div></div>';
 }
 
@@ -393,19 +364,20 @@ function catName(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CAT
 function findCat(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i];return null;}
 
 /* ══ DASHBOARD ══ */
-function pgDash(){
-  var projs=getProjects();var subs=getSubs();
-  var mySubs=S.role==='supervisor'?subs.filter(function(s){return s.supervisor===S.user;}):
-    S.role==='pm'?subs.filter(function(s){return projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;}).indexOf(s.project)>=0;}):subs;
-  var total=mySubs.length;
-  var avg=total?Math.round(mySubs.reduce(function(a,s){return a+getScore(s);},0)/total):0;
-  var pending=mySubs.filter(function(s){return s.status==='pending';}).length;
-  var fc=mySubs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
+async function pgDash(){
+  var projs=await dbGet('projects','select=*&order=created_at.desc');
+  var allSubs=await dbGet('submissions','select=*');
+  var subs=allSubs;
+  if(S.role==='supervisor')subs=allSubs.filter(function(s){return s.supervisor===S.user;});
+  else if(S.role==='pm')subs=allSubs.filter(function(s){return projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;}).indexOf(s.project)>=0;});
+  var total=subs.length;
+  var avg=total?Math.round(subs.reduce(function(a,s){return a+getScore(s);},0)/total):0;
+  var pending=subs.filter(function(s){return s.status==='pending';}).length;
+  var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
   var h='<div class="ph"><div class="ptitle">Dashboard</div>';
   if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
   if(S.role==='supervisor')h+='<button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button>';
   h+='</div>';
-  h+='<div class="al ali" style="margin-bottom:16px">💡 <strong>Sync tip:</strong> Use <strong>📤 Export</strong> to save data, and <strong>📥 Import</strong> on other devices to sync. PM exports after reviewing, supervisor imports to see updates.</div>';
   h+='<div class="mgrid">';
   h+='<div class="met"><div class="mlbl">Projects</div><div class="mval cb">'+projs.length+'</div></div>';
   h+='<div class="met"><div class="mlbl">Submissions</div><div class="mval cb">'+total+'</div></div>';
@@ -417,8 +389,8 @@ function pgDash(){
   if(!projs.length)h+='<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
   else{
     h+='<div class="tw"><table><thead><tr><th>Project</th><th>Location</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Status</th></tr></thead><tbody>';
-    projs.slice().reverse().forEach(function(p){
-      var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
+    projs.forEach(function(p){
+      var ps=allSubs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
       var pct=Math.round(ps.length/12*100);
       h+='<tr><td style="font-weight:700">'+p.name+'</td><td>'+(p.location||'—')+'</td><td>'+(p.supervisor||'—')+'</td>';
       h+='<td>'+fmtDate(p.takeover_date)+'</td><td>'+fmtDate(p.handover_date)+'</td>';
@@ -432,13 +404,13 @@ function pgDash(){
 }
 
 /* ══ MY PROJECTS ══ */
-function pgMyProjects(){
-  var projs=getProjects();var subs=getSubs();
-  var mine=projs.filter(function(p){return p.supervisor===S.user;});
+async function pgMyProjects(){
+  var projs=await dbGet('projects','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var subs=await dbGet('submissions','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
   var h='<div class="ph"><div class="ptitle">My projects</div><button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button></div>';
-  if(!mine.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div><div class="esub">Ask your PM to create a project and assign you.</div></div>';
-  mine.forEach(function(p){
-    var ps=subs.filter(function(s){return s.project===p.name&&s.supervisor===S.user;});
+  if(!projs.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div><div class="esub">Ask your PM to create a project and assign you.</div></div>';
+  projs.forEach(function(p){
+    var ps=subs.filter(function(s){return s.project===p.name;});
     var done=ps.filter(function(s){return s.status!=='draft';}).length;
     var pct=Math.round(done/12*100);
     h+='<div class="card"><div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">';
@@ -466,15 +438,14 @@ function pgMyProjects(){
 }
 
 /* ══ FILL CHECKLIST ══ */
-function pgFillChecklist(){
-  var projs=getProjects();
-  var mine=projs.filter(function(p){return p.supervisor===S.user;});
+async function pgFillChecklist(){
+  var projs=await dbGet('projects','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
   var h='<div class="ph"><div class="ptitle">Fill checklist</div></div>';
-  if(!mine.length)return h+'<div class="card"><div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div></div></div>';
+  if(!projs.length)return h+'<div class="card"><div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div></div></div>';
   h+='<div class="card" style="max-width:500px">';
   h+='<div class="fg"><label>Select project</label><select id="sel-proj" onchange="document.getElementById(\'cat-wrap\').style.display=\'block\'">';
   h+='<option value="">Choose project...</option>';
-  mine.forEach(function(p){h+='<option value="'+p.name+'">'+p.name+'</option>';});
+  projs.forEach(function(p){h+='<option value="'+p.name+'">'+p.name+'</option>';});
   h+='</select></div>';
   h+='<div id="cat-wrap" style="display:none">';
   h+='<div class="fg"><label>Work category</label><select id="sel-cat">';
@@ -493,19 +464,17 @@ function goChecklist(){
   openChecklist(proj,catid);
 }
 
-function openChecklist(proj,catid){
-  var subs=getSubs();
-  var existing=null;
-  for(var i=0;i<subs.length;i++){
-    if(subs[i].project===proj&&subs[i].category===catid&&subs[i].supervisor===S.user){existing=subs[i];break;}
-  }
+async function openChecklist(proj,catid){
+  document.getElementById('mc').innerHTML='<div class="loading">⏳ Loading checklist...</div>';
+  var subs=await dbGet('submissions','project=eq.'+encodeURIComponent(proj)+'&category=eq.'+catid+'&supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var existing=subs.length?subs[0]:null;
   S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
   S.sub=existing||null;
   nav('checklist',{proj:proj,cat:catid});
 }
 
 /* ══ CHECKLIST ══ */
-function pgChecklist(){
+async function pgChecklist(){
   var cat=findCat(S.cat);
   if(!cat)return'<div class="empty"><div class="etxt">Category not found.</div></div>';
   var existing=S.sub;
@@ -572,14 +541,14 @@ function pgChecklist(){
   h+='</div>';
   if(!submitted){
     h+='<div class="clf"><div style="font-size:13px;color:var(--gray);font-weight:600">'+chk_c+' / '+totalItems(cat)+' items answered</div>';
-    h+='<div style="display:flex;gap:8px"><button class="btn btnsm" onclick="saveDraft(this)">💾 Save draft</button>';
-    h+='<button class="btn btnp btnsm" onclick="submitCL(this)">✓ Submit checklist</button></div></div>';
+    h+='<div style="display:flex;gap:8px"><button class="btn btnsm" id="draft-btn" onclick="saveDraft(this)">💾 Save draft</button>';
+    h+='<button class="btn btnp btnsm" id="submit-btn" onclick="submitCL(this)">✓ Submit checklist</button></div></div>';
   } else if(isPM&&existing.status==='pending'){
     h+='<div class="clf"><div style="font-size:13px;color:var(--gray)">Fill Pass column above, then approve or reject.</div>';
     h+='<div style="display:flex;gap:8px">';
-    h+='<button class="btn btnsm" onclick="pmSave()">💾 Save</button>';
-    h+='<button class="btn btng btnsm" onclick="pmApprove()">✓ Approve</button>';
-    h+='<button class="btn btnr btnsm" onclick="pmReject()">✗ Reject</button>';
+    h+='<button class="btn btnsm" onclick="pmSave(this)">💾 Save</button>';
+    h+='<button class="btn btng btnsm" onclick="pmApprove(this)">✓ Approve</button>';
+    h+='<button class="btn btnr btnsm" onclick="pmReject(this)">✗ Reject</button>';
     h+='</div></div>';
   }
   h+='</div>';
@@ -602,31 +571,56 @@ function setPM(k,val,btn){
   if(boxes.length>=4){boxes[0].textContent=score+'%';boxes[0].className='sc-val '+scCls(score);boxes[1].textContent=pass_c;boxes[2].textContent=fail_c;boxes[3].textContent=fc_c;}
 }
 
-function saveSub(status,extra){
-  var subs=getSubs();
-  var found=false;
-  var sub=Object.assign({project:S.proj,category:S.cat,supervisor:S.sub?S.sub.supervisor:S.user,status:status,items:S.cldata,updated_at:today()},extra||{});
-  for(var i=0;i<subs.length;i++){
-    if(subs[i].project===S.proj&&subs[i].category===S.cat&&subs[i].supervisor===(S.sub?S.sub.supervisor:S.user)){subs[i]=sub;found=true;break;}
+async function saveDraft(btn){
+  btn.textContent='Saving...';btn.disabled=true;
+  if(S.sub){
+    await dbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,updated_at:new Date().toISOString()});
+  } else {
+    var res=await dbPost('submissions',{project:S.proj,category:S.cat,supervisor:S.user,status:'draft',items:S.cldata,updated_at:new Date().toISOString()});
+    if(res&&res.length)S.sub=res[0];
   }
-  if(!found)subs.push(sub);
-  saveSubs(subs);S.sub=sub;
+  btn.textContent='Saved!';setTimeout(function(){btn.textContent='💾 Save draft';btn.disabled=false;},2000);
 }
 
-function saveDraft(btn){btn.textContent='Saved!';saveSub('draft');setTimeout(function(){btn.textContent='💾 Save draft';},2000);}
-function submitCL(btn){
+async function submitCL(btn){
   var cat=findCat(S.cat);
   var ans=Object.keys(S.cldata).filter(function(k){return S.cldata[k]&&S.cldata[k].check;}).length;
   if(ans<totalItems(cat)&&!confirm('Only '+ans+'/'+totalItems(cat)+' items answered. Submit anyway?'))return;
-  saveSub('pending',{submitted_at:today()});nav('checklist',{proj:S.proj,cat:S.cat});
+  btn.textContent='Submitting...';btn.disabled=true;
+  if(S.sub){
+    await dbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'pending',submitted_at:today(),updated_at:new Date().toISOString()});
+  } else {
+    var res=await dbPost('submissions',{project:S.proj,category:S.cat,supervisor:S.user,status:'pending',items:S.cldata,submitted_at:today(),updated_at:new Date().toISOString()});
+    if(res&&res.length)S.sub=res[0];
+  }
+  await openChecklist(S.proj,S.cat);
 }
-function reOpenChecklist(){saveSub('draft',{pm_comment:null});openChecklist(S.proj,S.cat);}
-function pmSave(){saveSub('pending');alert('Saved!');}
-function pmApprove(){saveSub('approved');nav('review');}
-function pmReject(){
-  var comment=prompt('Reason for rejection (shown to supervisor):');
+
+async function reOpenChecklist(){
+  if(S.sub)await dbPatch('submissions','id=eq.'+S.sub.id,{status:'draft',pm_comment:null,updated_at:new Date().toISOString()});
+  await openChecklist(S.proj,S.cat);
+}
+
+async function pmSave(btn){
+  if(!S.sub)return;
+  btn.textContent='Saving...';btn.disabled=true;
+  await dbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,updated_at:new Date().toISOString()});
+  btn.textContent='Saved!';setTimeout(function(){btn.textContent='💾 Save';btn.disabled=false;},2000);
+}
+
+async function pmApprove(btn){
+  if(!S.sub)return;
+  btn.textContent='Approving...';btn.disabled=true;
+  await dbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'approved',updated_at:new Date().toISOString()});
+  nav('review');
+}
+
+async function pmReject(btn){
+  var comment=prompt('Reason for rejection (will be shown to supervisor):');
   if(comment===null)return;
-  saveSub('returned',{pm_comment:comment});nav('review');
+  btn.textContent='Rejecting...';btn.disabled=true;
+  await dbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'returned',pm_comment:comment,updated_at:new Date().toISOString()});
+  nav('review');
 }
 
 /* ══ NEW PROJECT ══ */
@@ -652,7 +646,7 @@ function pgNewProject(){
   '</div></div>';
 }
 
-function saveProject(){
+async function saveProject(){
   var name=document.getElementById('pf-name').value.trim();
   var loc=document.getElementById('pf-loc').value.trim();
   var take=document.getElementById('pf-take').value;
@@ -661,46 +655,47 @@ function saveProject(){
   var sup=document.getElementById('pf-sup').value;
   var al=document.getElementById('pf-al');
   if(!name||!loc||!take||!hand||!pm||!sup){al.innerHTML='<div class="al ald">Please fill in all required fields.</div>';return;}
-  var projs=getProjects();
-  if(projs.find(function(p){return p.name===name;})){al.innerHTML='<div class="al ald">Project name already exists.</div>';return;}
-  projs.push({name:name,location:loc,takeover_date:take,handover_date:hand,pm:pm,supervisor:sup,status:'active',created:today()});
-  saveProjects(projs);
-  nav('all-projects');
+  al.innerHTML='<div class="al ali">Creating project...</div>';
+  var res=await dbPost('projects',{name:name,location:loc,takeover_date:take,handover_date:hand,pm:pm,supervisor:sup,status:'active'});
+  if(res&&res.length){nav('all-projects');}
+  else al.innerHTML='<div class="al ald">Failed to create. Please check your connection and try again.</div>';
 }
 
 /* ══ ALL PROJECTS ══ */
-function pgAllProjects(){
-  var projs=getProjects();var subs=getSubs();
+async function pgAllProjects(){
+  var projs=await dbGet('projects','select=*&order=created_at.desc');
+  var subs=await dbGet('submissions','select=*');
   var h='<div class="ph"><div class="ptitle">All projects</div>';
   if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
   h+='</div>';
   if(!projs.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
-  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project name</th><th>Location</th><th>PM</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Avg score</th></tr></thead><tbody>';
-  projs.slice().reverse().forEach(function(p){
+  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project name</th><th>Location</th><th>PM</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Avg score</th><th>Status</th></tr></thead><tbody>';
+  projs.forEach(function(p){
     var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
     var av=ps.length?Math.round(ps.reduce(function(a,s){return a+getScore(s);},0)/ps.length):0;
     var pct=Math.round(ps.length/12*100);
     h+='<tr><td style="font-weight:700">'+p.name+'</td><td>'+(p.location||'—')+'</td><td>'+(p.pm||'—')+'</td><td>'+(p.supervisor||'—')+'</td>';
     h+='<td>'+fmtDate(p.takeover_date)+'</td><td>'+fmtDate(p.handover_date)+'</td>';
     h+='<td><div style="display:flex;align-items:center;gap:6px"><div class="pb" style="width:70px"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:var(--gray)">'+ps.length+'/12</span></div></td>';
-    h+='<td>'+(ps.length?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'—')+'</td></tr>';
+    h+='<td>'+(ps.length?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'—')+'</td>';
+    h+='<td><span class="bdg '+(p.status==='active'?'bg':'bn')+'">'+(p.status||'active')+'</span></td></tr>';
   });
   h+='</tbody></table></div></div>';
   return h;
 }
 
 /* ══ REVIEW ══ */
-function pgReview(){
-  var subs=getSubs();var projs=getProjects();
-  var pending=subs.filter(function(s){return s.status==='pending';});
+async function pgReview(){
+  var allSubs=await dbGet('submissions','status=eq.pending&select=*&order=updated_at.desc');
+  var projs=await dbGet('projects','select=name,pm');
   if(S.role==='pm'){
     var myP=projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;});
-    pending=pending.filter(function(s){return myP.indexOf(s.project)>=0;});
+    allSubs=allSubs.filter(function(s){return myP.indexOf(s.project)>=0;});
   }
-  var h='<div class="ph"><div class="ptitle">Review submissions</div><span class="chip">'+pending.length+' pending</span></div>';
-  if(!pending.length)return h+'<div class="empty"><div class="eico">✅</div><div class="etxt">No pending submissions</div></div>';
+  var h='<div class="ph"><div class="ptitle">Review submissions</div><span class="chip">'+allSubs.length+' pending</span></div>';
+  if(!allSubs.length)return h+'<div class="empty"><div class="eico">✅</div><div class="etxt">No pending submissions</div><div class="esub">All submissions have been reviewed.</div></div>';
   h+='<div class="card"><div class="tw"><table><thead><tr><th>Project</th><th>Category</th><th>Supervisor</th><th>Score</th><th>Fail</th><th>Fail+Cost</th><th>Date</th><th>Action</th></tr></thead><tbody>';
-  pending.forEach(function(s){
+  allSubs.forEach(function(s){
     var items=s.items||{};var keys=Object.keys(items);
     var fail_c=keys.filter(function(k){return items[k]&&items[k].pm==='fail';}).length;
     var fc_c=keys.filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;
@@ -710,24 +705,24 @@ function pgReview(){
     h+='<td>'+(fail_c?'<span class="bdg br">'+fail_c+'</span>':'—')+'</td>';
     h+='<td>'+(fc_c?'<span class="bdg bo">'+fc_c+'</span>':'—')+'</td>';
     h+='<td>'+(s.submitted_at?fmtDate(s.submitted_at):'—')+'</td>';
-    h+='<td><button class="btn btnsm" onclick="openReview(\''+s.project+'\',\''+s.category+'\',\''+s.supervisor+'\')">Review &rarr;</button></td></tr>';
+    h+='<td><button class="btn btnsm" onclick="openReview(\''+s.id+'\',\''+s.project+'\',\''+s.category+'\',\''+s.supervisor+'\')">Review &rarr;</button></td></tr>';
   });
   h+='</tbody></table></div></div>';
   return h;
 }
 
-function openReview(proj,catid,supervisor){
-  var subs=getSubs();
-  var existing=null;
-  for(var i=0;i<subs.length;i++){if(subs[i].project===proj&&subs[i].category===catid&&subs[i].supervisor===supervisor){existing=subs[i];break;}}
+async function openReview(subId,proj,catid,supervisor){
+  document.getElementById('mc').innerHTML='<div class="loading">⏳ Loading...</div>';
+  var subs=await dbGet('submissions','id=eq.'+subId+'&select=*');
+  var existing=subs.length?subs[0]:null;
   S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
   S.sub=existing||null;
   nav('checklist',{proj:proj,cat:catid});
 }
 
 /* ══ LEADERBOARD ══ */
-function pgLeaderboard(){
-  var subs=getSubs().filter(function(s){return s.status==='approved'||s.status==='pending';});
+async function pgLeaderboard(){
+  var subs=await dbGet('submissions','status=in.(approved,pending)&select=*');
   var h='<div class="ph"><div class="ptitle">Supervisor leaderboard</div></div>';
   var map={};
   subs.forEach(function(s){
@@ -740,7 +735,7 @@ function pgLeaderboard(){
   ranked.forEach(function(s,i){
     var rk=i===0?'r1':i===1?'r2':i===2?'r3':'';
     h+='<div class="lbrow"><div class="lbrank '+rk+'" style="background:'+(i>=3?'var(--grayl)':'')+'">'+( i+1)+'</div>';
-    h+='<div style="flex:1"><div class="lbname">'+s.name+'</div><div class="lbsub">'+s.count+' submission'+(s.count!==1?'s':'')+'</div></div>';
+    h+='<div style="flex:1"><div class="lbname">'+s.name+'</div><div style="font-size:11px;color:var(--gray)">'+s.count+' submission'+(s.count!==1?'s':'')+'</div></div>';
     h+='<div style="font-size:22px;font-weight:700" class="'+scCls(s.avg)+'">'+s.avg+'%</div></div>';
   });
   h+='</div>';
@@ -748,8 +743,9 @@ function pgLeaderboard(){
 }
 
 /* ══ REPORTS ══ */
-function pgReports(){
-  var subs=getSubs();var projs=getProjects();
+async function pgReports(){
+  var subs=await dbGet('submissions','select=*');
+  var projs=await dbGet('projects','select=*');
   var total=subs.length;
   var approved=subs.filter(function(s){return s.status==='approved';}).length;
   var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
@@ -778,7 +774,7 @@ function pgReports(){
   h+='</div>';
   h+='<div class="card"><div class="ctitle">Project scores</div>';
   if(!projs.length)h+='<div class="empty" style="padding:20px"><div class="etxt">No projects yet</div></div>';
-  else projs.slice().reverse().forEach(function(p){
+  else projs.forEach(function(p){
     var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
     var pct=Math.round(ps.length/12*100);
     var av=ps.length?Math.round(ps.reduce(function(a,s){return a+getScore(s);},0)/ps.length):0;
@@ -790,13 +786,14 @@ function pgReports(){
 }
 
 /* ══ MANAGE USERS ══ */
-function pgManageUsers(){
-  var users=getUsers();
+async function pgManageUsers(){
+  var users=await dbGet('users','select=*&order=name.asc');
   var h='<div class="ph"><div class="ptitle">Manage users</div></div>';
-  h+='<div class="card"><div class="ctitle">All users <span class="chip">'+users.length+'</span></div><div class="tw"><table><thead><tr><th>Name</th><th>Role</th></tr></thead><tbody>';
+  h+='<div class="card"><div class="ctitle">All users <span class="chip">'+users.length+'</span></div>';
+  h+='<div class="tw"><table><thead><tr><th>Name</th><th>Role</th></tr></thead><tbody>';
   users.forEach(function(u){h+='<tr><td style="font-weight:700">'+u.name+'</td><td><span class="bdg bi">'+roleLabel(u.role)+'</span></td></tr>';});
   h+='</tbody></table></div></div>';
-  h+='<div class="card" style="max-width:400px"><div class="ctitle">Reset user password</div>';
+  h+='<div class="card" style="max-width:420px"><div class="ctitle">Reset user password</div>';
   h+='<div class="fg"><label>Select user</label><select id="ru-name"><option value="">Select...</option>';
   users.forEach(function(u){h+='<option value="'+u.name+'">'+u.name+'</option>';});
   h+='</select></div>';
@@ -806,16 +803,15 @@ function pgManageUsers(){
   return h;
 }
 
-function doResetPw(){
+async function doResetPw(){
   var name=document.getElementById('ru-name').value;
   var pass=document.getElementById('ru-pass').value;
   var al=document.getElementById('ru-al');
   if(!name||!pass){al.innerHTML='<div class="al ald">Fill in both fields.</div>';return;}
-  var users=getUsers();
-  var idx=users.findIndex(function(u){return u.name===name;});
-  if(idx<0){al.innerHTML='<div class="al ald">User not found.</div>';return;}
-  users[idx].password=pass;saveUsers(users);
-  al.innerHTML='<div class="al als">✓ Password reset for '+name+'.</div>';
+  al.innerHTML='<div class="al ali">Saving...</div>';
+  var res=await dbPatch('users','name=eq.'+encodeURIComponent(name),{password:pass});
+  if(res)al.innerHTML='<div class="al als">✓ Password reset for '+name+'.</div>';
+  else al.innerHTML='<div class="al ald">Failed. Please try again.</div>';
 }
 
 /* ══ CHANGE PASSWORD ══ */
@@ -832,7 +828,7 @@ function pgChangePw(){
   '</div></div>';
 }
 
-function doChangePw(){
+async function doChangePw(){
   var cur=document.getElementById('cp-cur').value;
   var nw=document.getElementById('cp-new').value;
   var con=document.getElementById('cp-con').value;
@@ -840,11 +836,12 @@ function doChangePw(){
   if(!cur||!nw||!con){al.innerHTML='<div class="al ald">Please fill in all fields.</div>';return;}
   if(nw!==con){al.innerHTML='<div class="al ald">New passwords do not match.</div>';return;}
   if(nw.length<4){al.innerHTML='<div class="al ald">Password must be at least 4 characters.</div>';return;}
-  var users=getUsers();
-  var idx=users.findIndex(function(u){return u.name===S.user;});
-  if(users[idx].password!==cur){al.innerHTML='<div class="al ald">Current password is incorrect.</div>';return;}
-  users[idx].password=nw;saveUsers(users);
-  al.innerHTML='<div class="al als">✓ Password updated successfully!</div>';
+  var users=await dbGet('users','name=eq.'+encodeURIComponent(S.user)+'&select=*');
+  if(!users||!users.length){al.innerHTML='<div class="al ald">User not found.</div>';return;}
+  if(users[0].password!==cur){al.innerHTML='<div class="al ald">Current password is incorrect.</div>';return;}
+  var res=await dbPatch('users','name=eq.'+encodeURIComponent(S.user),{password:nw});
+  if(res)al.innerHTML='<div class="al als">✓ Password updated successfully!</div>';
+  else al.innerHTML='<div class="al ald">Failed to update. Please try again.</div>';
 }
 </script>
 </body>
