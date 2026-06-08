@@ -212,7 +212,7 @@ tbody tr:hover td{background:var(--grayl)}
       <input type="password" id="lpass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
     </div>
     <button class="btn btnp btnbl" onclick="doLogin()">Sign in</button>
-    <div class="note">Username and password are your name.<br>e.g. Name: <strong>Dinesh</strong> &nbsp;/&nbsp; Password: <strong>Dinesh</strong></div>
+    
   </div>
 </div>
 
@@ -223,7 +223,7 @@ tbody tr:hover td{background:var(--grayl)}
     <span class="ttitle">Site Work Progress Checklist</span>
     <div class="tuser">
       <span id="tinfo"></span>
-      <button class="tbtn" onclick="doLogout()">Sign out</button>
+      <button class="tbtn" onclick="nav('change-password')">🔒 Change password</button><button class="tbtn" onclick="doLogout()">Sign out</button>
     </div>
   </div>
   <div class="layout">
@@ -397,6 +397,7 @@ var NAVMAP={
   admin:[{id:'dashboard',lbl:'Dashboard'},{id:'new-project',lbl:'New project'},{id:'all-projects',lbl:'All projects'},{id:'review',lbl:'Review submissions'},{id:'leaderboard',lbl:'Leaderboard'},{id:'reports',lbl:'Reports'},{id:'manage-users',lbl:'Manage users'}],
   director:[{id:'dashboard',lbl:'Dashboard'},{id:'all-projects',lbl:'All projects'},{id:'leaderboard',lbl:'Leaderboard'},{id:'reports',lbl:'Reports'}]
 };
+};
 
 function buildSidebar(){
   var role=S.role==='admin'?'admin':S.role;
@@ -428,6 +429,7 @@ function render(){
   else if(p==='leaderboard')pgLeaderboard().then(function(h){mc.innerHTML=h;});
   else if(p==='reports')pgReports().then(function(h){mc.innerHTML=h;});
   else if(p==='manage-users')pgManageUsers().then(function(h){mc.innerHTML=h;});
+  else if(p==='change-password'){mc.innerHTML=pgChangePassword();}
   else mc.innerHTML='<div class="empty"><div class="etxt">Page not found</div></div>';
 }
 
@@ -1021,6 +1023,38 @@ async function resetPw(){
   if(res)al.innerHTML='<div class="al als">Password updated for '+name+'.</div>';
   else al.innerHTML='<div class="al ald">Failed. Try again.</div>';
 }
+
+/* ── CHANGE PASSWORD ── */
+function pgChangePassword(){
+  return '<div class="ph"><div class="ptitle">Change password</div></div>'+
+  '<div class="card" style="max-width:380px">'+
+  '<div class="fg"><label>Current password</label><input type="password" id="cp-cur" placeholder="Enter current password" /></div>'+
+  '<div class="fg"><label>New password</label><input type="password" id="cp-new" placeholder="Enter new password" /></div>'+
+  '<div class="fg"><label>Confirm new password</label><input type="password" id="cp-con" placeholder="Confirm new password" /></div>'+
+  '<div id="cp-al"></div>'+
+  '<div style="display:flex;gap:10px;margin-top:4px">'+
+  '<button class="btn" onclick="nav('dashboard')">Cancel</button>'+
+  '<button class="btn btnp" onclick="doChangePw()">Update password</button>'+
+  '</div></div>';
+}
+
+async function doChangePw(){
+  var cur=document.getElementById('cp-cur').value;
+  var nw=document.getElementById('cp-new').value;
+  var con=document.getElementById('cp-con').value;
+  var al=document.getElementById('cp-al');
+  if(!cur||!nw||!con){al.innerHTML='<div class="al ald">Please fill in all fields.</div>';return;}
+  if(nw!==con){al.innerHTML='<div class="al ald">New passwords do not match.</div>';return;}
+  if(nw.length<4){al.innerHTML='<div class="al ald">Password must be at least 4 characters.</div>';return;}
+  /* verify current password */
+  var users=await sbGet('users','name=eq.'+encodeURIComponent(S.user)+'&select=*');
+  if(!users||!users.length){al.innerHTML='<div class="al ald">User not found.</div>';return;}
+  if(users[0].password!==cur){al.innerHTML='<div class="al ald">Current password is incorrect.</div>';return;}
+  var res=await sbPatch('users','name=eq.'+encodeURIComponent(S.user),{password:nw});
+  if(res)al.innerHTML='<div class="al als">✓ Password updated successfully!</div>';
+  else al.innerHTML='<div class="al ald">Failed to update. Please try again.</div>';
+}
+
 </script>
 </body>
 </html>
