@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JKG Site Work Progress Checklist</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a3f8b;--blue2:#152f6a;--bluel:#eef2fc;--bluem:#4a6fbe;
+  --green:#1e6b3f;--greenl:#edf7f1;
+  --amber:#8a5000;--amberl:#fff8ed;
+  --orange:#b84c00;--orangel:#fff0e6;
+  --gray:#6b6860;--grayl:#f0eeea;--graym:#e0ddd6;--grayd:#3a3835;
+  --red:#8B1A1A;--redl:#fff5f5;
+  --gold:#c8a830;--goldl:#fffdf0;--goldd:#7a6000;
+  --white:#fff;--black:#1a1917;
+  --r:8px;--rl:12px;
+}
+body{font-family:Arial,sans-serif;font-size:14px;color:var(--black);background:var(--grayl);min-height:100vh}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--grayl)}
+.lbox{background:var(--white);border:1px solid var(--graym);border-radius:16px;padding:32px;width:100%;max-width:400px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.lhead{text-align:center;margin-bottom:24px}
+.llogo{font-size:22px;font-weight:700;color:var(--red);letter-spacing:1px}
+.lsub{font-size:12px;color:var(--gray);margin-top:4px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select{width:100%;padding:10px 12px;border:1.5px solid var(--graym);border-radius:var(--r);font-size:13px;font-family:Arial,sans-serif;background:var(--white);color:var(--black);outline:none;transition:border-color .15s}
+.fg input:focus,.fg select:focus{border-color:var(--blue)}
+.al{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:12px}
+.ald{background:var(--redl);color:var(--red);border:1px solid #fcc}
+.als{background:var(--greenl);color:var(--green);border:1px solid #b6dfc8}
+.ali{background:var(--bluel);color:var(--blue);border:1px solid #b8ccf0}
+.note{background:var(--grayl);border-radius:var(--r);padding:10px 12px;font-size:12px;color:var(--gray);margin-top:12px;line-height:1.6}
+
+/* BUTTONS */
+.btn{padding:9px 16px;border-radius:var(--r);border:1.5px solid var(--graym);background:var(--white);color:var(--black);font-size:13px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover{background:var(--grayl)}
+.btnp{background:var(--blue);color:#fff;border-color:var(--blue)}.btnp:hover{background:var(--blue2)}
+.btng{background:var(--green);color:#fff;border-color:var(--green)}
+.btnr{background:var(--red);color:#fff;border-color:var(--red)}
+.btnbl{width:100%;justify-content:center}
+.btnsm{padding:5px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* APP SHELL */
+#app{display:none;min-height:100vh;flex-direction:column}
+.topbar{background:var(--blue);color:#fff;height:52px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:100}
+.tlogo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.5px}
+.ttitle{font-size:12px;color:#ccd6f0;flex:1}
+.tuser{font-size:12px;opacity:.8;display:flex;align-items:center;gap:10px}
+.tbtn{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer;background:transparent;font-family:Arial,sans-serif}
+.tbtn:hover{background:rgba(255,255,255,.12)}
+.layout{display:flex;flex:1;min-height:calc(100vh - 52px)}
+
+/* SIDEBAR */
+.sidebar{width:200px;background:var(--white);border-right:1px solid var(--graym);padding:10px 0;flex-shrink:0}
+.ni{padding:10px 16px;font-size:13px;color:var(--gray);cursor:pointer;border-left:3px solid transparent;font-weight:500}
+.ni:hover{background:var(--grayl);color:var(--black)}
+.ni.on{background:var(--bluel);color:var(--blue);border-left-color:var(--blue);font-weight:700}
+
+/* MAIN */
+.main{flex:1;padding:24px;overflow-x:auto}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.ptitle{font-size:19px;font-weight:700}
+.back{display:inline-flex;align-items:center;gap:5px;color:var(--gray);font-size:13px;cursor:pointer;margin-bottom:14px;font-weight:600}
+.back:hover{color:var(--black)}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--graym);border-radius:var(--rl);padding:20px;margin-bottom:16px}
+.ctitle{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+
+/* METRICS */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px}
+.met{background:var(--white);border:1px solid var(--graym);border-radius:var(--rl);padding:14px 16px}
+.mlbl{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mval{font-size:28px;font-weight:700;line-height:1}
+.cg{color:var(--green)}.ca{color:var(--amber)}.cr{color:var(--red)}.cb{color:var(--blue)}
+
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--grayl)}
+th{text-align:left;padding:9px 12px;border-bottom:1px solid var(--graym);font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--graym);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--grayl)}
+
+/* BADGES */
+.bdg{display:inline-block;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700}
+.bg{background:var(--greenl);color:var(--green)}
+.bw{background:var(--amberl);color:var(--amber)}
+.br{background:var(--redl);color:var(--red)}
+.bi{background:var(--bluel);color:var(--blue)}
+.bn{background:var(--grayl);color:var(--gray);border:1px solid var(--graym)}
+.bo{background:var(--orangel);color:var(--orange)}
+
+/* PROGRESS */
+.pb{height:6px;background:var(--grayl);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+.pfg{background:var(--green)}.pfa{background:#d97706}.pfr{background:var(--red)}
+
+/* CATEGORY GRID */
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px}
+.catcard{background:var(--white);border:2px solid var(--graym);border-radius:var(--rl);padding:14px;cursor:pointer;transition:all .15s}
+.catcard:hover{border-color:var(--blue);transform:translateY(-1px)}
+.catcard.done{border-color:var(--green);background:var(--greenl)}
+.catcard.draft{border-color:#d97706;background:var(--amberl)}
+.catcard.returned{border-color:var(--red);background:var(--redl)}
+.catname{font-size:13px;font-weight:700;margin-bottom:6px;line-height:1.3}
+.catmeta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gray)}
+
+/* CHECKLIST TABLE */
+.clwrap{width:100%;border-collapse:collapse;font-size:12px}
+.clwrap th{background:var(--blue);color:#fff;padding:9px 10px;text-align:left;font-size:11px;font-weight:700;border-bottom:2px solid var(--graym);white-space:nowrap}
+.clwrap th.pm-col{background:#2a4f9b;color:var(--gold)}
+.clwrap td{padding:8px 10px;border-bottom:1px solid var(--graym);vertical-align:middle}
+.clwrap td.pm-col{background:var(--goldl);border-left:2px solid var(--gold)}
+.clwrap .secrow td{background:var(--grayl);font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;padding:6px 10px}
+.clwrap tbody tr:hover td{background:#fafaf8}
+.clwrap tbody tr:hover td.pm-col{background:#fffce0}
+.numcol{width:32px;text-align:center;color:var(--gray);font-size:11px;font-weight:700}
+.rg{display:flex;border:1px solid var(--graym);border-radius:var(--r);overflow:hidden;width:fit-content}
+.rb{padding:4px 10px;font-size:11px;font-weight:700;border:none;background:transparent;cursor:pointer;color:var(--gray);border-right:1px solid var(--graym);font-family:Arial,sans-serif}
+.rb:last-child{border-right:none}
+.rb:hover{background:var(--grayl)}
+.rb.yes.on{background:var(--bluel);color:var(--blue)}
+.rb.na.on{background:var(--grayl);color:var(--black)}
+.rb.pass.on{background:var(--greenl);color:var(--green)}
+.rb.fail.on{background:var(--redl);color:var(--red)}
+.rb.fc.on{background:var(--orangel);color:var(--orange)}
+.pmblank{display:flex;align-items:center;justify-content:center;height:28px;font-size:11px;color:#bbb;font-style:italic;border:1px dashed var(--gold);border-radius:var(--r);background:var(--goldl);min-width:70px}
+.phbtn{border:1px dashed var(--graym);border-radius:var(--r);padding:4px 8px;font-size:11px;color:var(--blue);background:var(--white);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.phbtn:hover{background:var(--bluel)}
+.phcount{background:var(--bluel);color:var(--blue);border:1px solid var(--bluem);border-radius:var(--r);padding:4px 8px;font-size:11px;font-weight:700}
+.rmk{border:1px solid var(--graym);border-radius:var(--r);padding:5px 8px;font-size:11px;width:140px;font-family:Arial,sans-serif;background:var(--white);color:var(--black);outline:none}
+.rmk:focus{border-color:var(--blue)}
+.clf{display:flex;align-items:center;justify-content:space-between;padding:14px 0 0;border-top:2px solid var(--graym);margin-top:8px;flex-wrap:wrap;gap:12px}
+.clinfo{font-size:13px;color:var(--gray);font-weight:600}
+
+/* PHOTO MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--white);border-radius:var(--rl);padding:24px;max-width:480px;width:90%;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:15px;font-weight:700;margin-bottom:14px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.photo-thumb{position:relative;aspect-ratio:1;border-radius:var(--r);overflow:hidden;border:1px solid var(--graym)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-del{position:absolute;top:4px;right:4px;background:rgba(139,26,26,.8);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif}
+.upload-area{border:2px dashed var(--graym);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;color:var(--gray);font-size:13px}
+.upload-area:hover{border-color:var(--blue);background:var(--bluel)}
+.upload-area input{display:none}
+
+/* FORM */
+.form-section{background:var(--bluel);border-radius:var(--r);padding:8px 14px;font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid.one{grid-template-columns:1fr}
+
+/* SCORE SUMMARY */
+.score-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin:10px 0}
+.sc-box{border-radius:var(--r);padding:8px 10px;text-align:center;border:1px solid var(--graym)}
+.sc-lbl{font-size:9px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.sc-val{font-size:16px;font-weight:700}
+
+/* LEADERBOARD */
+.lbrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--graym)}
+.lbrow:last-child{border-bottom:none}
+.lbrank{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.r1{background:#fef3c7;color:#92400e}.r2{background:#f1f5f9;color:#475569}.r3{background:var(--redl);color:var(--red)}
+.lbname{font-size:14px;font-weight:700;flex:1}
+.lbsub{font-size:11px;color:var(--gray)}
+.lbsc{font-size:22px;font-weight:700;color:var(--blue)}
+
+/* MISC */
+.chip{display:inline-block;padding:3px 10px;border-radius:100px;font-size:12px;border:1px solid var(--graym);color:var(--gray);background:var(--grayl)}
+.empty{text-align:center;padding:48px 20px;color:var(--gray)}
+.eico{font-size:38px;margin-bottom:8px;opacity:.3}
+.etxt{font-size:14px;font-weight:700}
+.esub{font-size:12px;margin-top:4px}
+.sep{height:1px;background:var(--graym);margin:14px 0}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.loading{text-align:center;padding:40px;color:var(--gray);font-size:13px}
+.proj-info{font-size:12px;color:var(--gray);margin-bottom:12px;line-height:1.8}
+.proj-info span{font-weight:700;color:var(--black)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="lbox">
+    <div class="lhead">
+      <div class="llogo">JAMES KING GROUP</div>
+      <div class="lsub">Site Work Progress Checklist</div>
+    </div>
+    <div id="lal"></div>
+    <div class="fg"><label>Your name</label>
+      <select id="lname">
+        <option value="">Select your name...</option>
+        <option>Justin</option>
+        <option>Verdi</option>
+        <option>Tan Kee Tong</option>
+        <option>Hardian</option>
+        <option>Chai Zhi Ying</option>
+        <option>Dinesh</option>
+        <option>Surrendar</option>
+        <option>Test</option>
+      </select>
+    </div>
+    <div class="fg"><label>Password</label>
+      <input type="password" id="lpass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <button class="btn btnp btnbl" onclick="doLogin()">Sign in</button>
+    <div class="note">Username and password are your name.<br>e.g. Name: <strong>Dinesh</strong> &nbsp;/&nbsp; Password: <strong>Dinesh</strong></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;flex-direction:column">
+  <div class="topbar">
+    <span class="tlogo">JAMES KING GROUP</span>
+    <span class="ttitle">Site Work Progress Checklist</span>
+    <div class="tuser">
+      <span id="tinfo"></span>
+      <button class="tbtn" onclick="doLogout()">Sign out</button>
+    </div>
+  </div>
+  <div class="layout">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="main" id="mc"><div class="loading">Loading...</div></div>
+  </div>
+</div>
+
+<!-- PHOTO MODAL -->
+<div id="photo-modal" class="modal-bg" style="display:none">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Photos</div>
+    <div class="photo-grid" id="photo-grid"></div>
+    <div class="upload-area" onclick="document.getElementById('photo-input').click()">
+      <input type="file" id="photo-input" accept="image/*" multiple onchange="uploadPhotos(this)" />
+      <div>📷 Click to add photos</div>
+      <div style="font-size:11px;color:var(--gray);margin-top:4px">JPG, PNG supported</div>
+    </div>
+    <div id="upload-progress" style="font-size:12px;color:var(--blue);margin-top:8px;display:none">Uploading...</div>
+    <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
+      <button class="btn btnsm" onclick="closePhotoModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL = 'https://vfdqqsegkwpbclyfdwcx.supabase.co';
+const SB_KEY = 'sb_publishable_1Z2CRIA9Qvz8AEc9g1e07Q_FHR2csSL';
+
+const H = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+
+async function sbGet(table, filter){
+  var url = SB_URL+'/rest/v1/'+table+'?'+filter+'&apikey='+SB_KEY;
+  var r = await fetch(url,{headers:H});
+  return r.ok ? r.json() : [];
+}
+async function sbPost(table, data){
+  var r = await fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(data)});
+  return r.ok ? r.json() : null;
+}
+async function sbPatch(table, filter, data){
+  var r = await fetch(SB_URL+'/rest/v1/'+table+'?'+filter,{method:'PATCH',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(data)});
+  return r.ok ? r.json() : null;
+}
+async function sbDelete(table, filter){
+  var r = await fetch(SB_URL+'/rest/v1/'+table+'?'+filter,{method:'DELETE',headers:H});
+  return r.ok;
+}
+async function uploadFile(bucket, path, file){
+  var r = await fetch(SB_URL+'/storage/v1/object/'+bucket+'/'+path,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':file.type},body:file});
+  return r.ok ? SB_URL+'/storage/v1/object/public/'+bucket+'/'+path : null;
+}
+
+/* ── CHECKLIST CATEGORIES ── */
+var CATS=[
+  {id:'flooring',name:'Flooring work',sections:[
+    {s:'Screeding work',items:['Ensure all elements are covered by screeding, with sufficient allowance to receive the floor finishes material.','Ensure the quantity and location of floor electrical points is installed according to the drawing.','Ensure the floor traps and electrical metal boxes are covered before screeding to prevent debris and screed going inside. (e.g. use a rubber plug)','Ensure the quantity and location of water inlet/outlet points is installed according to the drawing.']},
+    {s:'Floor finishes installation',items:['Ensure the floor finishes material specification are according to the drawing.','Ensure the starting point location, pattern, and direction of the floor finishes material is installed according to the drawing.','Ensure the floor is level after floor finishes are installed. (e.g. surface is flat, no uneven joints)','Ensure to provide openings on the floor finishes material as needed. (e.g. for metal boxes, wire access, floor traps)','Ensure the floor finishes material is in good condition. (e.g. no chips, no damage)','Ensure the floor grouting color code are according to the drawing.','Ensure the floor trap cover finishes is installed according to the drawing. (e.g. tiles, steel cover)','Ensure to install a rubber plug stopper for unused floor traps.']},
+    {s:'Termination',items:['Ensure the termination of "flooring to flooring" is installed according to the drawing.']},
+    {s:'Cover floor protection',items:['Ensure the floor is cleaned before covering the protection sheets.','Ensure the protection sheets stick securely to prevent scratches and damage to the floor finishes.']}
+  ]},
+  {id:'waterproofing',name:'Waterproofing work',sections:[
+    {s:'Waterproofing',items:['Ensure the kerb has an allowance to hold min. 50mm depth of water for the water ponding test.','Ensure the waterproofing material specification are according to mall requirements.','Ensure waterproofing material is applied to the kerb upturn, wall upturn, and floor trap downturn to a depth of 50mm.','Ensure to install a barricade to prevent people steps in or debris falls after waterproofing material is applied.','Ensure the non-drill areas of the waterproofed sections are marked to prevent damage during work.']},
+    {s:'Water ponding test',items:['Ensure compliance with mall requirements: 24 hours or 48 hours.','Ensure to install a barricade to prevent people steps in or debris falls during the water ponding test.','Ensure photos or video records are taken before pouring water and after releasing water.']}
+  ]},
+  {id:'plumbing',name:'Plumbing work',sections:[
+    {s:'Plumbing',items:['Ensure to add a stop valve to the existing water inlet pipe if necessary.','Ensure the screed depth is sufficient to fit the water outlet pipe with a slight slant.','Ensure the water pipe material specification are according to mall requirements.','Ensure the direction, quantity, and location of water piping and water inlet/outlet points is installed according to the drawing.','Ensure the water piping are properly secured at the location with cement before covering with screed.','Ensure the non-drill areas of the water piping are marked to prevent damage during work.','Ensure all water piping is connected, and white Teflon tape is applied at the pipe joint connections.','Ensure the water flow functions properly and no water leaking.']},
+    {s:'Water meter',items:['Ensure the location of water meter is installed according to the drawing and PUB requirements.']},
+    {s:'Water heater',items:['Ensure the location of water heater is installed according to the drawing.','Ensure a stainless steel tray with an outlet pipe is installed under the water heater.']}
+  ]},
+  {id:'ceiling',name:'Ceiling work',sections:[
+    {s:'Ceiling frame',items:['Ensure the ceiling frame is level with sufficient allowance to receive the ceiling finishes material.','Ensure to add a ceiling support if necessary.']},
+    {s:'L-box for aircon',items:['Ensure the size, quantity, and location of L-boxes is installed according to the drawing.','Ensure the L-box inner color code are according to the drawing.','Ensure the L-box edges and corners are straight and aligned.']},
+    {s:'Access panel',items:['Ensure the size, quantity, and location of access panels is installed according to the drawing.','Ensure the access panel is accessible, no items blocking it from below or above the ceiling.']},
+    {s:'Ceiling finishes',items:['Ensure the ceiling material specification are according to the drawing.','Ensure the putty on the ceiling surface is smooth.','Ensure the sealer base paint is applied correctly.','Ensure the ceiling height is installed according to the drawing.','Ensure the ceiling is level after ceiling finishes are installed.','Ensure the ceiling finishes edges and corners are straight and aligned.']},
+    {s:'Termination',items:['Ensure the termination of "ceiling to wall" is installed according to the drawing.']}
+  ]},
+  {id:'wall',name:'Wall / partition work',sections:[
+    {s:'Partition frame',items:['Ensure the partition frame is level, with sufficient allowance to receive the wall finishes material.','Ensure to add a wall backing support if necessary.','Ensure the quantity and location of wall wires is installed according to the drawing before covering the partition.','Ensure the opening size of the door frame is according to the drawing.']},
+    {s:'Partition / wall finishes',items:['Ensure the wall material specification are according to the drawing.','Ensure the joint net is installed on the partition joint line before applying putty to prevent cracks.','Ensure the putty on the partition surface is smooth.','Ensure the sealer base paint is applied correctly.','Ensure the wall surface is ready to receive finishing.','Ensure the wall is level after wall finishes are installed.']},
+    {s:'Termination',items:['Ensure the termination of "wall to ceiling" and "wall to flooring" is installed according to the drawing.']},
+    {s:'Skirting',items:['Ensure the size, material, and location of the skirting is installed according to the drawing.','Ensure the skirting joint lines is installed according to the drawing.']}
+  ]},
+  {id:'acmv',name:'ACMV work',sections:[
+    {s:'ACMV installation',items:['Ensure the location of rigid ducts is installed according to the drawing.','Ensure the quantity and location of collar openings and flexible ducts is installed according to the drawing.','Ensure the flexible ducts are not twisted and do not exceed 1.5m in length.','Ensure the size, quantity, and location of aircon supply/return is installed according to the drawing.','Ensure the aircon return components is installed according to the drawing.','Ensure the thermostat wire length is sufficient to reach the designated location.','Ensure the quantity and location of thermostats is installed according to the drawing.']},
+    {s:'Air balancing test',items:['Ensure the site is dust-free and odor-free before turning on the AC power.']}
+  ]},
+  {id:'fire',name:'Fire protection work',sections:[
+    {s:'Sprinkler work',items:['Ensure the size and location of sprinkler main pipes is installed according to the drawing.','Ensure the quantity and location of sprinkler drop points is installed according to the drawing.','Ensure the sprinkler piping does not block maintenance access or other servicing.','Ensure all sprinkler pipes are painted in red color according to mall requirements.','Ensure the color code of sprinkler head covers is installed according to the design.','Ensure to provide temporary access for 2nd layer sprinkler pipe to the CV pipe connection point.']},
+    {s:'EXIT sign',items:['Ensure the design, quantity, and location of EXIT sign is installed according to the drawing.']},
+    {s:'Emergency light',items:['Ensure the design, quantity, and location of emergency lights is installed according to the drawing.']},
+    {s:'PA speaker (EVCS)',items:['Ensure the PA speaker wiring is fire-rated according to mall requirements.','Ensure the quantity and location of PA speakers is installed according to the drawing.']},
+    {s:'Fire extinguisher',items:['Ensure the size, quantity and location of fire extinguishers is installed according to the drawing.']},
+    {s:'Smoke detector (ESCS)',items:['Ensure the quantity and location of smoke detectors is installed according to the drawing.','Ensure the smoke detectors are covered before starting work.']},
+    {s:'Hosereel',items:['Ensure the quantity and location of hosereel is installed according to the drawing.']},
+    {s:'Alarm bell, call bell, strobe light',items:['Ensure the quantity and location of alarm bells, call bells, and strobe lights is installed according to the drawing.']}
+  ]},
+  {id:'shopfront',name:'Shopfront & entrance closure',sections:[
+    {s:'Shopfront pelmet',items:['Ensure the pelmet support is installed according to the drawing and site marking template.','Ensure the pelmet material specification are installed according to the drawing.','Ensure the size and location of pelmet is installed according to the drawing.','Ensure the pelmet join lines is installed according to the drawing.']},
+    {s:'Termination',items:['Ensure the termination of the pelmet, pelmet to ceiling and pelmet to wall is installed according to the drawing.','Ensure the termination of shopfront wall to ceiling and wall to flooring is installed according to the drawing.']},
+    {s:'Entrance closure compartment',items:['Ensure the compartment inner clearance is installed according to the drawing, with space to park all the door panels.','Ensure the size and location of compartment door and door handle is installed according to the drawing.']},
+    {s:'Entrance closure system',items:['Ensure the door track support is installed according to the drawing and site marking template.','Ensure the location of door track is installed according to the drawing and site marking template.','Ensure the termination of the door track and ceiling is installed according to drawing.','Ensure the size and quantity of door panels is installed according to the drawing.','Ensure the door panels can open/close smoothly and the lock system functions properly.','Ensure duplicate door lock keys according to client request.']},
+    {s:'Signage',items:['Ensure the quantity and location of signage is installed according to the drawing.','Ensure the material, quantity and location of unit numbers is installed according to the drawing.']}
+  ]},
+  {id:'carpentry',name:'Carpentry work',sections:[
+    {s:'Door',items:['Ensure the door material specification are installed according to the drawing.','Ensure the size, quantity, and location of door and door frame is installed according to the drawing.','Ensure the door frame are installed aligned from top to bottom to prevent uneven gaps.','Ensure the quantity and location of door accessories is installed according to the drawing.','Ensure the door can open/close smoothly and the lock system functions properly.']},
+    {s:'Wall fixtures / loose fixture',items:['Ensure the fixture material specification are installed according to the drawing.','Ensure the size, quantity, and location of fixtures is installed according to the drawing.','Ensure the fixture is level and aligned after installation.','Ensure the opening quantity and location of power points and wiring holes is according to the drawing.','Ensure the fixture access panel is accessible for maintenance and servicing.','Ensure the quantity and location of electrical drivers is installed according to the drawing.','Ensure the cabinet doors have soft closer and do not hit the wall when opened.','Ensure the cabinet drawers have soft closer, can fully pull out and close smoothly.','Ensure the cabinet doors, drawers, and hand gaps are aligned.','Ensure the fixture finishes is in good condition.']},
+    {s:'Termination',items:['Ensure the termination of fixture to ceiling, fixture to wall, fixture to flooring is installed according to the drawing.']}
+  ]},
+  {id:'electrical',name:'Electrical work',sections:[
+    {s:'Electrical and lighting point',items:['Ensure the location of DB box is installed according to the drawing.','Ensure the electrical trunking does not block maintenance access or other servicing.','Ensure the electrical conduit/flexible pipe material are according to mall requirements.','Ensure the electrical conduit pipes are properly secured before covering the floor screed.','Ensure the quantity and location of electrical points and lighting points is installed according to the drawing.','Ensure the quantity and location of power point sockets and lighting switches is installed according to the drawing.','Ensure the quantity and location of data points and telephone points is installed according to the drawing.']},
+    {s:'Lighting fitting',items:['Ensure the ceiling lighting specification are according to the drawing.','Ensure the quantity and location of ceiling lighting is installed according to the drawing.','Ensure the fixture lighting specification are according to the drawing.','Ensure the quantity and location of fixture lighting is installed according to the drawing.','Ensure the lighting direction is adjusted to shine on the specified area according to the drawing.']},
+    {s:'LED screen / TV',items:['Ensure the quantity and location of electrical points and data points is installed according to the drawing.','Ensure the LED screen/TV functions properly and covered with protection.']},
+    {s:'Tenant speaker',items:['Ensure the quantity and location of tenant speakers is installed according to the drawing and functions properly.','Ensure the amplifier is installed and functions properly.']},
+    {s:'CCTV',items:['Ensure the quantity and location of CCTV cameras is installed according to the drawing.']},
+    {s:'Telephone line',items:['Ensure the quantity and location of telephone points is installed according to the drawing.','Ensure Singtel has visited the site and completed their work.']},
+    {s:'WIFI router and data line',items:['Ensure the quantity and location of WIFI router and data points is installed according to the drawing and functions properly.']}
+  ]},
+  {id:'signage',name:'Signage',sections:[
+    {s:'Shopfront signage',items:['Ensure the quantity and location of shopfront signages is installed according to the drawing, no light leaking.','Ensure the signage design is according to the drawing.']},
+    {s:'Wall signage',items:['Ensure the quantity and location of wall signages is installed according to the drawing, no light leaking.','Ensure the signage design is according to the drawing.']},
+    {s:'Fixture signage',items:['Ensure the quantity and location of fixture signages is installed according to the drawing, no light leaking.','Ensure the signage design is according to the drawing.']}
+  ]},
+  {id:'handover',name:'Handover training',sections:[
+    {s:'Instructing staff on operational procedures',items:['Operate the entrance closure system.','Operate the amplifier / music player.','Operate the cleaning method on special materials.','Point out the location of DB box.','Point out the location of power points.','Point out the location of on/off switches and explain the function.','Point out the location of water meter and water valve.','Point out the location of floor trap / floor waste.']}
+  ]}
+];
+
+function totalItems(cat){var n=0;for(var i=0;i<cat.sections.length;i++)n+=cat.sections[i].items.length;return n;}
+
+/* ── STATE ── */
+var S={user:null,role:null,page:'dashboard',proj:null,cat:null,sub:null,cldata:{},photos:{},modalKey:null};
+
+var ROLES={
+  Justin:'director',Verdi:'admin',
+  'Tan Kee Tong':'pm',Hardian:'pm','Chai Zhi Ying':'pm',
+  Dinesh:'supervisor',Surrendar:'supervisor',Test:'supervisor'
+};
+
+/* ── AUTH ── */
+async function doLogin(){
+  var name=document.getElementById('lname').value;
+  var pass=document.getElementById('lpass').value;
+  var al=document.getElementById('lal');
+  if(!name||!pass){al.innerHTML='<div class="al ald">Please select your name and enter password.</div>';return;}
+  al.innerHTML='<div class="al ali">Signing in...</div>';
+  var users=await sbGet('users','name=eq.'+encodeURIComponent(name)+'&select=*');
+  if(!users||!users.length){al.innerHTML='<div class="al ald">User not found.</div>';return;}
+  var u=users[0];
+  if(u.password!==pass){al.innerHTML='<div class="al ald">Incorrect password.</div>';return;}
+  S.user=name;S.role=u.role;
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('tinfo').textContent=name+' — '+roleLabel(u.role);
+  buildSidebar();nav('dashboard');
+}
+
+function doLogout(){
+  S={user:null,role:null,page:'dashboard',proj:null,cat:null,sub:null,cldata:{},photos:{},modalKey:null};
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('lal').innerHTML='';
+  document.getElementById('lpass').value='';
+  document.getElementById('lname').value='';
+}
+
+/* ── NAV ── */
+var NAVMAP={
+  supervisor:[{id:'dashboard',lbl:'Dashboard'},{id:'my-projects',lbl:'My projects'},{id:'fill-checklist',lbl:'Fill checklist'}],
+  pm:[{id:'dashboard',lbl:'Dashboard'},{id:'new-project',lbl:'New project'},{id:'all-projects',lbl:'All projects'},{id:'review',lbl:'Review submissions'},{id:'reports',lbl:'Reports'}],
+  admin:[{id:'dashboard',lbl:'Dashboard'},{id:'new-project',lbl:'New project'},{id:'all-projects',lbl:'All projects'},{id:'review',lbl:'Review submissions'},{id:'leaderboard',lbl:'Leaderboard'},{id:'reports',lbl:'Reports'},{id:'manage-users',lbl:'Manage users'}],
+  director:[{id:'dashboard',lbl:'Dashboard'},{id:'all-projects',lbl:'All projects'},{id:'leaderboard',lbl:'Leaderboard'},{id:'reports',lbl:'Reports'}]
+};
+
+function buildSidebar(){
+  var role=S.role==='admin'?'admin':S.role;
+  var items=NAVMAP[role]||NAVMAP.supervisor;
+  var h='';
+  for(var i=0;i<items.length;i++)
+    h+='<div class="ni" id="ni-'+items[i].id+'" onclick="nav(\''+items[i].id+'\')">'+items[i].lbl+'</div>';
+  document.getElementById('sidebar').innerHTML=h;
+}
+
+function nav(page,ctx){
+  S.page=page;
+  if(ctx)Object.assign(S,ctx);
+  document.querySelectorAll('.ni').forEach(function(el){el.classList.toggle('on',el.id==='ni-'+page);});
+  render();
+}
+
+function render(){
+  var mc=document.getElementById('mc');
+  mc.innerHTML='<div class="loading">Loading...</div>';
+  var p=S.page;
+  if(p==='dashboard')pgDash().then(function(h){mc.innerHTML=h;});
+  else if(p==='my-projects')pgMyProjects().then(function(h){mc.innerHTML=h;});
+  else if(p==='fill-checklist')pgFillChecklist().then(function(h){mc.innerHTML=h;});
+  else if(p==='checklist')pgChecklist().then(function(h){mc.innerHTML=h;});
+  else if(p==='new-project'){mc.innerHTML=pgNewProject();}
+  else if(p==='all-projects')pgAllProjects().then(function(h){mc.innerHTML=h;});
+  else if(p==='review')pgReview().then(function(h){mc.innerHTML=h;});
+  else if(p==='leaderboard')pgLeaderboard().then(function(h){mc.innerHTML=h;});
+  else if(p==='reports')pgReports().then(function(h){mc.innerHTML=h;});
+  else if(p==='manage-users')pgManageUsers().then(function(h){mc.innerHTML=h;});
+  else mc.innerHTML='<div class="empty"><div class="etxt">Page not found</div></div>';
+}
+
+/* ── HELPERS ── */
+function today(){return new Date().toISOString().slice(0,10);}
+function fmtDate(d){if(!d)return'—';var dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function roleLabel(r){return{supervisor:'Site Supervisor',pm:'Project Manager',admin:'Admin / HOD',director:'Project Director'}[r]||r;}
+function getScore(sub){
+  var items=sub.items||{};var keys=Object.keys(items);var app=0;var pass=0;
+  for(var i=0;i<keys.length;i++){var v=items[keys[i]];if(v&&v.pm&&v.pm!==''){app++;if(v.pm==='pass')pass++;}}
+  return app?Math.round(pass/app*100):0;
+}
+function scCls(s){return s>=90?'cg':s>=70?'ca':'cr';}
+function pfCls(s){return s>=90?'pfg':s>=70?'pfa':'pfr';}
+function bdgCls(st){return{approved:'bg',pending:'bw',returned:'br',draft:'bn'}[st]||'bn';}
+function catName(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i].name;return id;}
+function findCat(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i];return null;}
+
+/* ── DASHBOARD ── */
+async function pgDash(){
+  var projs=await sbGet('projects','select=*&order=created_at.desc');
+  var subs=await sbGet('submissions','select=*');
+  if(S.role==='supervisor'){subs=subs.filter(function(s){return s.supervisor===S.user;});}
+  else if(S.role==='pm'){
+    var myProjs=projs.filter(function(p){return p.pm===S.user;}).map(function(p){return p.name;});
+    subs=subs.filter(function(s){return myProjs.indexOf(s.project)>=0;});
+  }
+  var total=subs.length;
+  var avgSum=0;for(var i=0;i<subs.length;i++)avgSum+=getScore(subs[i]);
+  var avg=total?Math.round(avgSum/total):0;
+  var pending=subs.filter(function(s){return s.status==='pending';}).length;
+  var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
+  var h='<div class="ph"><div class="ptitle">Dashboard</div>';
+  if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
+  if(S.role==='supervisor')h+='<button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button>';
+  h+='</div>';
+  h+='<div class="mgrid"><div class="met"><div class="mlbl">Projects</div><div class="mval cb">'+projs.length+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Submissions</div><div class="mval cb">'+total+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Avg score</div><div class="mval '+scCls(avg)+'">'+avg+'%</div></div>';
+  h+='<div class="met"><div class="mlbl">Pending review</div><div class="mval ca">'+pending+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Fail+Cost flags</div><div class="mval cr">'+fc+'</div></div>';
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Recent projects</div>';
+  if(!projs.length)h+='<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
+  else{
+    h+='<div class="tw"><table><thead><tr><th>Project</th><th>Location</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Status</th></tr></thead><tbody>';
+    projs.slice(0,8).forEach(function(p){
+      var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
+      var pct=Math.round(ps.length/12*100);
+      h+='<tr><td style="font-weight:700">'+p.name+'</td><td>'+( p.location||'—')+'</td><td>'+(p.supervisor||'—')+'</td><td>'+fmtDate(p.takeover_date)+'</td><td>'+fmtDate(p.handover_date)+'</td>';
+      h+='<td><div style="display:flex;align-items:center;gap:8px"><div class="pb" style="width:80px"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:var(--gray)">'+ps.length+'/12</span></div></td>';
+      h+='<td><span class="bdg '+(p.status==='active'?'bg':'bn')+'">'+(p.status||'active')+'</span></td></tr>';
+    });
+    h+='</tbody></table></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+/* ── MY PROJECTS (Supervisor) ── */
+async function pgMyProjects(){
+  var projs=await sbGet('projects','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var subs=await sbGet('submissions','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var h='<div class="ph"><div class="ptitle">My projects</div><button class="btn btnp btnsm" onclick="nav(\'fill-checklist\')">+ Fill checklist</button></div>';
+  if(!projs.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div><div class="esub">Ask your PM to create a project and assign you as supervisor.</div></div>';
+  projs.forEach(function(p){
+    var ps=subs.filter(function(s){return s.project===p.name;});
+    var done=ps.filter(function(s){return s.status!=='draft';}).length;
+    var pct=Math.round(done/12*100);
+    h+='<div class="card"><div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">';
+    h+='<div><div style="font-size:15px;font-weight:700">'+p.name+'</div></div>';
+    h+='<span class="chip">'+done+'/12 done</span></div>';
+    h+='<div class="proj-info">📍 <span>'+( p.location||'—')+'</span> &nbsp;|&nbsp; 👷 PM: <span>'+(p.pm||'—')+'</span> &nbsp;|&nbsp; 📅 Takeover: <span>'+fmtDate(p.takeover_date)+'</span> &nbsp;|&nbsp; 🏁 Handover: <span>'+fmtDate(p.handover_date)+'</span></div>';
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="pb" style="flex:1"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:12px;font-weight:700;color:var(--gray)">'+pct+'% complete</span></div>';
+    h+='<div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Click a category to fill checklist:</div>';
+    h+='<div class="catgrid">';
+    CATS.forEach(function(cat){
+      var sub=null;var draft=null;
+      for(var i=0;i<ps.length;i++){
+        if(ps[i].category===cat.id){
+          if(ps[i].status==='draft')draft=ps[i];
+          else sub=ps[i];
+        }
+      }
+      var cls=sub?'done':draft?'draft':'';
+      if(sub&&sub.status==='returned')cls='returned';
+      var score=sub?getScore(sub):0;
+      h+='<div class="catcard '+cls+'" onclick="openChecklist(\''+p.name+'\',\''+cat.id+'\')">';
+      h+='<div class="catname">'+cat.name+'</div>';
+      h+='<div class="catmeta"><span>'+totalItems(cat)+' items</span>';
+      if(sub&&sub.status==='approved')h+='<span class="bdg bg">'+score+'%</span>';
+      else if(sub&&sub.status==='returned')h+='<span class="bdg br">Returned</span>';
+      else if(sub&&sub.status==='pending')h+='<span class="bdg bw">Pending</span>';
+      else if(draft)h+='<span class="bdg bn">Draft</span>';
+      else h+='<span class="bdg bn">Pending</span>';
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  return h;
+}
+
+/* ── FILL CHECKLIST SELECT ── */
+async function pgFillChecklist(){
+  var projs=await sbGet('projects','supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var h='<div class="ph"><div class="ptitle">Fill checklist</div></div>';
+  if(!projs.length)return h+'<div class="card"><div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects assigned</div></div></div>';
+  h+='<div class="card" style="max-width:500px">';
+  h+='<div class="fg"><label>Select project</label><select id="sel-proj" onchange="document.getElementById(\'cat-wrap\').style.display=\'block\'">';
+  h+='<option value="">Choose project...</option>';
+  projs.forEach(function(p){h+='<option value="'+p.name+'">'+p.name+'</option>';});
+  h+='</select></div>';
+  h+='<div id="cat-wrap" style="display:none">';
+  h+='<div class="fg"><label>Work category</label><select id="sel-cat">';
+  h+='<option value="">Choose category...</option>';
+  CATS.forEach(function(c){h+='<option value="'+c.id+'">'+c.name+' ('+totalItems(c)+' items)</option>';});
+  h+='</select></div>';
+  h+='<button class="btn btnp" onclick="goChecklist()">Open checklist &rarr;</button>';
+  h+='</div></div>';
+  return h;
+}
+
+function goChecklist(){
+  var proj=document.getElementById('sel-proj').value;
+  var catid=document.getElementById('sel-cat').value;
+  if(!proj||!catid){alert('Please select both project and category.');return;}
+  openChecklist(proj,catid);
+}
+
+async function openChecklist(proj,catid){
+  var subs=await sbGet('submissions','project=eq.'+encodeURIComponent(proj)+'&category=eq.'+catid+'&supervisor=eq.'+encodeURIComponent(S.user)+'&select=*');
+  var existing=subs.length?subs[0]:null;
+  S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
+  S.sub=existing;
+  var photos=existing?await sbGet('photos','submission_id=eq.'+existing.id+'&select=*'):[];
+  S.photos={};
+  if(photos&&photos.length){photos.forEach(function(ph){if(!S.photos[ph.item_key])S.photos[ph.item_key]=[];S.photos[ph.item_key].push({id:ph.id,url:ph.url});});}
+  nav('checklist',{proj:proj,cat:catid});
+}
+
+/* ── CHECKLIST PAGE ── */
+async function pgChecklist(){
+  var cat=findCat(S.cat);
+  if(!cat)return'<div class="empty"><div class="etxt">Category not found.</div></div>';
+  var existing=S.sub;
+  var submitted=existing&&existing.status!=='draft';
+  var isPM=(S.role==='pm'||S.role==='admin');
+
+  var h='<div class="back" onclick="nav(\'my-projects\')">&#8592; Back to my projects</div>';
+  h+='<div class="ph"><div><div class="ptitle">'+cat.name+'</div>';
+  h+='<div style="font-size:12px;color:var(--gray);margin-top:2px">Project: <strong>'+S.proj+'</strong> &nbsp;|&nbsp; Supervisor: <strong>'+S.user+'</strong></div></div></div>';
+
+  if(submitted){
+    var sc=getScore(existing);
+    h+='<div class="al '+(existing.status==='approved'?'als':existing.status==='returned'?'ald':'ali')+'" style="margin-bottom:14px">';
+    h+='Status: <strong>'+(existing.status==='approved'?'Approved':existing.status==='returned'?'Returned by PM — please recheck and resubmit':'Pending PM review')+'</strong>';
+    if(existing.status==='returned'&&existing.pm_comment)h+=' &nbsp;|&nbsp; PM comment: <em>'+existing.pm_comment+'</em>';
+    h+='</div>';
+    if(existing.status==='returned')h+='<div style="margin-bottom:12px"><button class="btn btnp btnsm" onclick="reOpenChecklist()">Re-open &amp; resubmit</button></div>';
+  }
+
+  /* Legend */
+  h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:12px">';
+  h+='<div style="background:var(--bluel);border:1px solid var(--bluem);border-radius:6px;padding:5px 12px;color:var(--blue)"><strong>Supervisor fills:</strong> Check &nbsp;|&nbsp; Photos &nbsp;|&nbsp; Remarks</div>';
+  h+='<div style="background:var(--goldl);border:1px solid var(--gold);border-radius:6px;padding:5px 12px;color:var(--goldd)"><strong>PM fills:</strong> Pass &nbsp;|&nbsp; Fail &nbsp;|&nbsp; Fail+Cost</div>';
+  h+='</div>';
+
+  /* Table */
+  h+='<div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="clwrap"><thead><tr>';
+  h+='<th class="numcol">No.</th><th style="min-width:200px">Description</th>';
+  h+='<th style="min-width:100px">Check</th><th style="min-width:80px">Photos</th><th style="min-width:140px">Remarks</th>';
+  h+='<th class="pm-col" style="min-width:110px">Pass (PM)</th>';
+  h+='</tr></thead><tbody>';
+
+  var idx=0;
+  cat.sections.forEach(function(sec){
+    h+='<tr class="secrow"><td colspan="6">'+sec.s+'</td></tr>';
+    sec.items.forEach(function(item){
+      var k='i'+idx;
+      var v=S.cldata[k]||{};
+      var phArr=S.photos[k]||[];
+      var supDis=(submitted&&existing.status!=='returned')?'disabled':'';
+      var pmDis=(!isPM||!submitted)?'disabled':'';
+
+      h+='<tr><td class="numcol">'+(idx+1)+'</td>';
+      h+='<td style="font-size:12px;line-height:1.5">'+item+'</td>';
+
+      /* Check */
+      h+='<td><div class="rg">';
+      h+='<button class="rb yes'+(v.check==='yes'?' on':'')+'" '+supDis+' onclick="setCheck(\''+k+'\',\'yes\',this)">Yes</button>';
+      h+='<button class="rb na'+(v.check==='na'?' on':'')+'" '+supDis+' onclick="setCheck(\''+k+'\',\'na\',this)">N/A</button>';
+      h+='</div></td>';
+
+      /* Photos */
+      h+='<td>';
+      if(phArr.length)h+='<span class="phcount" onclick="openPhotoModal(\''+k+'\')" style="cursor:pointer">'+phArr.length+' photo'+(phArr.length>1?'s':'')+'</span>';
+      else if(!supDis)h+='<button class="phbtn" onclick="openPhotoModal(\''+k+'\')">📷 Add</button>';
+      else h+='<span style="color:var(--gray);font-size:11px">—</span>';
+      h+='</td>';
+
+      /* Remarks */
+      h+='<td><input class="rmk" type="text" placeholder="Remarks..." value="'+(v.remarks||'').replace(/"/g,'&quot;')+'" '+supDis+' onchange="setRemark(\''+k+'\',this.value)" /></td>';
+
+      /* Pass (PM) */
+      h+='<td class="pm-col">';
+      if(!submitted){
+        h+='<div class="pmblank">PM fills</div>';
+      } else {
+        h+='<div class="rg">';
+        h+='<button class="rb pass'+(v.pm==='pass'?' on':'')+'" '+pmDis+' onclick="setPM(\''+k+'\',\'pass\',this)">Pass</button>';
+        h+='<button class="rb fail'+(v.pm==='fail'?' on':'')+'" '+pmDis+' onclick="setPM(\''+k+'\',\'fail\',this)">Fail</button>';
+        h+='<button class="rb fc'+(v.pm==='fail+cost'?' on':'')+'" '+pmDis+' onclick="setPM(\''+k+'\',\'fail+cost\',this)">Fail+Cost</button>';
+        h+='</div>';
+      }
+      h+='</td></tr>';
+      idx++;
+    });
+  });
+  h+='</tbody></table></div>';
+
+  /* Score bar */
+  var pass_c=0,fail_c=0,fc_c=0,chk_c=0;
+  var keys=Object.keys(S.cldata);
+  for(var i=0;i<keys.length;i++){
+    var vv=S.cldata[keys[i]];
+    if(vv){
+      if(vv.check)chk_c++;
+      if(vv.pm==='pass')pass_c++;
+      else if(vv.pm==='fail')fail_c++;
+      else if(vv.pm==='fail+cost')fc_c++;
+    }
+  }
+  var pm_tot=pass_c+fail_c+fc_c;
+  var score=pm_tot?Math.round(pass_c/pm_tot*100):0;
+  h+='<div class="score-bar">';
+  h+='<div class="sc-box"><div class="sc-lbl">Score</div><div class="sc-val '+scCls(score)+'">'+score+'%</div></div>';
+  h+='<div class="sc-box"><div class="sc-lbl">Pass</div><div class="sc-val cg">'+pass_c+'</div></div>';
+  h+='<div class="sc-box"><div class="sc-lbl">Fail</div><div class="sc-val cr">'+fail_c+'</div></div>';
+  h+='<div class="sc-box"><div class="sc-lbl">Fail+Cost</div><div class="sc-val" style="color:var(--orange)">'+fc_c+'</div></div>';
+  h+='<div class="sc-box"><div class="sc-lbl">Sup. Filled</div><div class="sc-val cb">'+chk_c+'/'+totalItems(cat)+'</div></div>';
+  h+='<div class="sc-box"><div class="sc-lbl">PM Reviewed</div><div class="sc-val" style="color:var(--goldd)">'+pm_tot+'/'+totalItems(cat)+'</div></div>';
+  h+='</div>';
+
+  /* Footer buttons */
+  if(!submitted){
+    h+='<div class="clf"><div class="clinfo">'+chk_c+' / '+totalItems(cat)+' items answered</div>';
+    h+='<div style="display:flex;gap:8px"><button class="btn btnsm" id="draft-btn" onclick="saveDraft(this)">💾 Save draft</button>';
+    h+='<button class="btn btnp btnsm" id="submit-btn" onclick="submitCL(this)">✓ Submit checklist</button></div></div>';
+  } else if(isPM&&existing.status==='pending'){
+    h+='<div class="clf"><div class="clinfo">PM: fill Pass column above, then approve or reject below.</div>';
+    h+='<div style="display:flex;gap:8px">';
+    h+='<button class="btn btnsm" style="color:var(--green);border-color:var(--green)" onclick="pmSaveReview()">💾 Save review</button>';
+    h+='<button class="btn btng btnsm" onclick="pmApprove()">✓ Approve</button>';
+    h+='<button class="btn btnr btnsm" onclick="pmReject()">✗ Reject</button>';
+    h+='</div></div>';
+  }
+  h+='</div></div>';
+  return h;
+}
+
+function setCheck(k,val,btn){
+  if(!S.cldata[k])S.cldata[k]={};
+  S.cldata[k].check=val;
+  var rg=btn.closest('.rg');
+  rg.querySelectorAll('.rb').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+}
+function setRemark(k,val){
+  if(!S.cldata[k])S.cldata[k]={};
+  S.cldata[k].remarks=val;
+}
+function setPM(k,val,btn){
+  if(!S.cldata[k])S.cldata[k]={};
+  S.cldata[k].pm=val;
+  var rg=btn.closest('.rg');
+  rg.querySelectorAll('.rb').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  /* update score bar live */
+  var pass_c=0,fail_c=0,fc_c=0;
+  Object.keys(S.cldata).forEach(function(key){var v=S.cldata[key];if(v){if(v.pm==='pass')pass_c++;else if(v.pm==='fail')fail_c++;else if(v.pm==='fail+cost')fc_c++;}});
+  var pm_tot=pass_c+fail_c+fc_c;
+  var score=pm_tot?Math.round(pass_c/pm_tot*100):0;
+  var boxes=document.querySelectorAll('.sc-box .sc-val');
+  if(boxes.length>=6){
+    boxes[0].textContent=score+'%'; boxes[0].className='sc-val '+scCls(score);
+    boxes[1].textContent=pass_c;
+    boxes[2].textContent=fail_c;
+    boxes[3].textContent=fc_c;
+    boxes[5].textContent=pm_tot+'/'+totalItems(findCat(S.cat));
+  }
+}
+
+async function saveDraft(btn){
+  btn.textContent='Saving...';btn.disabled=true;
+  if(S.sub){
+    await sbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,updated_at:new Date().toISOString()});
+  } else {
+    var res=await sbPost('submissions',{project:S.proj,category:S.cat,supervisor:S.user,status:'draft',items:S.cldata,updated_at:new Date().toISOString()});
+    if(res&&res.length)S.sub=res[0];
+  }
+  btn.textContent='Saved!';setTimeout(function(){btn.textContent='💾 Save draft';btn.disabled=false;},2000);
+}
+
+async function submitCL(btn){
+  var cat=findCat(S.cat);
+  var ans=Object.keys(S.cldata).filter(function(k){return S.cldata[k]&&S.cldata[k].check;}).length;
+  if(ans<totalItems(cat)&&!confirm('Only '+ans+'/'+totalItems(cat)+' items answered. Submit anyway?'))return;
+  btn.textContent='Submitting...';btn.disabled=true;
+  if(S.sub){
+    await sbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'pending',submitted_at:new Date().toISOString(),updated_at:new Date().toISOString()});
+  } else {
+    var res=await sbPost('submissions',{project:S.proj,category:S.cat,supervisor:S.user,status:'pending',items:S.cldata,submitted_at:new Date().toISOString(),updated_at:new Date().toISOString()});
+    if(res&&res.length)S.sub=res[0];
+  }
+  nav('checklist',{proj:S.proj,cat:S.cat});
+}
+
+async function reOpenChecklist(){
+  if(S.sub)await sbPatch('submissions','id=eq.'+S.sub.id,{status:'draft',pm_comment:null,updated_at:new Date().toISOString()});
+  await openChecklist(S.proj,S.cat);
+}
+
+async function pmSaveReview(){
+  if(!S.sub)return;
+  await sbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,updated_at:new Date().toISOString()});
+  alert('Review saved.');
+}
+
+async function pmApprove(){
+  if(!S.sub)return;
+  await sbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'approved',updated_at:new Date().toISOString()});
+  nav('review');
+}
+
+async function pmReject(){
+  var comment=prompt('Reason for rejection (will be shown to supervisor):');
+  if(comment===null)return;
+  await sbPatch('submissions','id=eq.'+S.sub.id,{items:S.cldata,status:'returned',pm_comment:comment,updated_at:new Date().toISOString()});
+  nav('review');
+}
+
+/* ── PHOTO MODAL ── */
+function openPhotoModal(key){
+  S.modalKey=key;
+  document.getElementById('modal-title').textContent='Photos — Item '+(parseInt(key.replace('i',''))+1);
+  renderPhotoGrid();
+  document.getElementById('photo-modal').style.display='flex';
+}
+function closePhotoModal(){document.getElementById('photo-modal').style.display='none';}
+function renderPhotoGrid(){
+  var phArr=S.photos[S.modalKey]||[];
+  var h='';
+  phArr.forEach(function(ph){
+    h+='<div class="photo-thumb"><img src="'+ph.url+'" />';
+    h+='<button class="photo-del" onclick="deletePhoto(\''+ph.id+'\',\''+S.modalKey+'\')">×</button></div>';
+  });
+  document.getElementById('photo-grid').innerHTML=h;
+}
+async function uploadPhotos(input){
+  if(!S.sub){
+    /* save draft first to get ID */
+    var res=await sbPost('submissions',{project:S.proj,category:S.cat,supervisor:S.user,status:'draft',items:S.cldata,updated_at:new Date().toISOString()});
+    if(res&&res.length)S.sub=res[0];
+  }
+  var prog=document.getElementById('upload-progress');
+  prog.style.display='block';
+  for(var i=0;i<input.files.length;i++){
+    var file=input.files[i];
+    var path=S.sub.id+'/'+S.modalKey+'/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._]/g,'_');
+    var url=await uploadFile('checklist-photos',path,file);
+    if(url){
+      var rec=await sbPost('photos',{submission_id:S.sub.id,item_key:S.modalKey,url:url});
+      if(rec&&rec.length){
+        if(!S.photos[S.modalKey])S.photos[S.modalKey]=[];
+        S.photos[S.modalKey].push({id:rec[0].id,url:url});
+      }
+    }
+  }
+  prog.style.display='none';
+  renderPhotoGrid();
+  /* update photo count in table */
+  var btns=document.querySelectorAll('[onclick*="openPhotoModal(\''+S.modalKey+'\')"]');
+  var cnt=S.photos[S.modalKey]?S.photos[S.modalKey].length:0;
+  btns.forEach(function(b){b.textContent=cnt+' photo'+(cnt>1?'s':'');b.className='phcount';b.style.cursor='pointer';});
+  input.value='';
+}
+async function deletePhoto(id,key){
+  if(!confirm('Delete this photo?'))return;
+  await sbDelete('photos','id=eq.'+id);
+  if(S.photos[key])S.photos[key]=S.photos[key].filter(function(p){return p.id!==id;});
+  renderPhotoGrid();
+}
+
+/* ── NEW PROJECT ── */
+function pgNewProject(){
+  return '<div class="ph"><div class="ptitle">New project</div></div>'+
+  '<div class="card" style="max-width:580px">'+
+  '<div class="form-section">Project information</div>'+
+  '<div class="fg"><label>Project name *</label><input type="text" id="pf-name" placeholder="e.g. Uniqlo @ ION Orchard" /></div>'+
+  '<div class="fg"><label>Location *</label><input type="text" id="pf-loc" placeholder="e.g. ION Orchard, #B2-01, Singapore" /></div>'+
+  '<div class="twocol">'+
+  '<div class="fg"><label>Takeover date *</label><input type="date" id="pf-take" /><div style="font-size:11px;color:var(--gray);margin-top:3px">Date site is handed to JKG</div></div>'+
+  '<div class="fg"><label>Handover date *</label><input type="date" id="pf-hand" /><div style="font-size:11px;color:var(--gray);margin-top:3px">Date site is handed back to client</div></div>'+
+  '</div>'+
+  '<div class="sep"></div>'+
+  '<div class="form-section">Team assignment</div>'+
+  '<div class="twocol">'+
+  '<div class="fg"><label>Project manager *</label><select id="pf-pm"><option value="">Select PM...</option><option>Tan Kee Tong</option><option>Hardian</option><option>Chai Zhi Ying</option></select></div>'+
+  '<div class="fg"><label>Site supervisor *</label><select id="pf-sup"><option value="">Select supervisor...</option><option>Dinesh</option><option>Surrendar</option><option>Test</option></select></div>'+
+  '</div>'+
+  '<div id="pf-al"></div>'+
+  '<div style="display:flex;gap:10px;margin-top:6px">'+
+  '<button class="btn" onclick="nav(\'all-projects\')">Cancel</button>'+
+  '<button class="btn btnp" onclick="saveProject()">Create project &rarr;</button>'+
+  '</div></div>';
+}
+
+async function saveProject(){
+  var name=document.getElementById('pf-name').value.trim();
+  var loc=document.getElementById('pf-loc').value.trim();
+  var take=document.getElementById('pf-take').value;
+  var hand=document.getElementById('pf-hand').value;
+  var pm=document.getElementById('pf-pm').value;
+  var sup=document.getElementById('pf-sup').value;
+  var al=document.getElementById('pf-al');
+  if(!name||!loc||!take||!hand||!pm||!sup){al.innerHTML='<div class="al ald">Please fill in all required fields.</div>';return;}
+  al.innerHTML='<div class="al ali">Creating project...</div>';
+  var res=await sbPost('projects',{name:name,location:loc,takeover_date:take,handover_date:hand,pm:pm,supervisor:sup,status:'active'});
+  if(res)nav('all-projects');
+  else al.innerHTML='<div class="al ald">Failed to create project. Please try again.</div>';
+}
+
+/* ── ALL PROJECTS ── */
+async function pgAllProjects(){
+  var projs=await sbGet('projects','select=*&order=created_at.desc');
+  var subs=await sbGet('submissions','select=*');
+  var h='<div class="ph"><div class="ptitle">All projects</div>';
+  if(S.role==='pm'||S.role==='admin')h+='<button class="btn btnp btnsm" onclick="nav(\'new-project\')">+ New project</button>';
+  h+='</div>';
+  if(!projs.length)return h+'<div class="empty"><div class="eico">🏗️</div><div class="etxt">No projects yet</div></div>';
+  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project name</th><th>Location</th><th>PM</th><th>Supervisor</th><th>Takeover</th><th>Handover</th><th>Progress</th><th>Avg score</th><th>Status</th></tr></thead><tbody>';
+  projs.forEach(function(p){
+    var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
+    var avs=0;ps.forEach(function(s){avs+=getScore(s);});
+    var av=ps.length?Math.round(avs/ps.length):0;
+    var pct=Math.round(ps.length/12*100);
+    h+='<tr><td style="font-weight:700">'+p.name+'</td><td>'+(p.location||'—')+'</td><td>'+(p.pm||'—')+'</td><td>'+(p.supervisor||'—')+'</td>';
+    h+='<td>'+fmtDate(p.takeover_date)+'</td><td>'+fmtDate(p.handover_date)+'</td>';
+    h+='<td><div style="display:flex;align-items:center;gap:6px"><div class="pb" style="width:70px"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:var(--gray)">'+ps.length+'/12</span></div></td>';
+    h+='<td>'+(ps.length?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'—')+'</td>';
+    h+='<td><span class="bdg '+(p.status==='active'?'bg':'bn')+'">'+(p.status||'active')+'</span></td></tr>';
+  });
+  h+='</tbody></table></div></div>';
+  return h;
+}
+
+/* ── REVIEW (PM) ── */
+async function pgReview(){
+  var allSubs=await sbGet('submissions','status=eq.pending&select=*&order=updated_at.desc');
+  /* filter to PM's projects */
+  if(S.role==='pm'){
+    var myProjs=await sbGet('projects','pm=eq.'+encodeURIComponent(S.user)+'&select=name');
+    var names=myProjs.map(function(p){return p.name;});
+    allSubs=allSubs.filter(function(s){return names.indexOf(s.project)>=0;});
+  }
+  var h='<div class="ph"><div class="ptitle">Review submissions</div><span class="chip">'+allSubs.length+' pending</span></div>';
+  if(!allSubs.length)return h+'<div class="empty"><div class="eico">✅</div><div class="etxt">No pending submissions</div><div class="esub">All submissions have been reviewed.</div></div>';
+  h+='<div class="card"><div class="tw"><table><thead><tr><th>Project</th><th>Category</th><th>Supervisor</th><th>Score</th><th>Fail</th><th>Fail+Cost</th><th>Submitted</th><th>Action</th></tr></thead><tbody>';
+  allSubs.forEach(function(s){
+    var items=s.items||{};var keys=Object.keys(items);
+    var fail_c=0;var fc_c=0;
+    keys.forEach(function(k){if(items[k]&&items[k].pm==='fail')fail_c++;if(items[k]&&items[k].pm==='fail+cost')fc_c++;});
+    var sc=getScore(s);
+    h+='<tr><td style="font-weight:700">'+s.project+'</td><td>'+catName(s.category)+'</td><td>'+s.supervisor+'</td>';
+    h+='<td><span class="'+scCls(sc)+'" style="font-weight:700">'+sc+'%</span></td>';
+    h+='<td>'+(fail_c?'<span class="bdg br">'+fail_c+'</span>':'—')+'</td>';
+    h+='<td>'+(fc_c?'<span class="bdg bo">'+fc_c+'</span>':'—')+'</td>';
+    h+='<td>'+(s.submitted_at?fmtDate(s.submitted_at):'—')+'</td>';
+    h+='<td><div style="display:flex;gap:4px;flex-wrap:wrap">';
+    h+='<button class="btn btnsm" onclick="openReviewChecklist(\''+s.id+'\',\''+s.project+'\',\''+s.category+'\',\''+s.supervisor+'\')" style="font-size:11px">Review</button>';
+    h+='</div></td></tr>';
+  });
+  h+='</tbody></table></div></div>';
+  return h;
+}
+
+async function openReviewChecklist(subId,proj,catid,supervisor){
+  var subs=await sbGet('submissions','id=eq.'+subId+'&select=*');
+  var existing=subs.length?subs[0]:null;
+  S.cldata=existing?JSON.parse(JSON.stringify(existing.items||{})):{};
+  S.sub=existing;
+  var photos=await sbGet('photos','submission_id=eq.'+subId+'&select=*');
+  S.photos={};
+  if(photos&&photos.length){photos.forEach(function(ph){if(!S.photos[ph.item_key])S.photos[ph.item_key]=[];S.photos[ph.item_key].push({id:ph.id,url:ph.url});});}
+  nav('checklist',{proj:proj,cat:catid});
+}
+
+/* ── LEADERBOARD ── */
+async function pgLeaderboard(){
+  var subs=await sbGet('submissions','status=in.(approved,pending)&select=*');
+  var h='<div class="ph"><div class="ptitle">Supervisor leaderboard</div></div>';
+  var map={};
+  subs.forEach(function(s){
+    if(!map[s.supervisor])map[s.supervisor]={name:s.supervisor,scores:[],count:0};
+    map[s.supervisor].scores.push(getScore(s));map[s.supervisor].count++;
+  });
+  var ranked=Object.values(map).map(function(s){var sum=0;s.scores.forEach(function(v){sum+=v;});return{name:s.name,avg:Math.round(sum/s.scores.length),count:s.count};}).sort(function(a,b){return b.avg-a.avg;});
+  if(!ranked.length)return h+'<div class="empty"><div class="eico">🏆</div><div class="etxt">No data yet</div></div>';
+  h+='<div class="card">';
+  ranked.forEach(function(s,i){
+    var rk=i===0?'r1':i===1?'r2':i===2?'r3':'';
+    h+='<div class="lbrow"><div class="lbrank '+rk+'" style="background:'+(i>=3?'var(--grayl)':'')+'">'+( i+1)+'</div>';
+    h+='<div><div class="lbname">'+s.name+'</div><div class="lbsub">'+s.count+' submission'+(s.count!==1?'s':'')+'</div></div>';
+    h+='<div class="lbsc '+scCls(s.avg)+'">'+s.avg+'%</div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+/* ── REPORTS ── */
+async function pgReports(){
+  var subs=await sbGet('submissions','select=*');
+  var total=subs.length;
+  var approved=subs.filter(function(s){return s.status==='approved';}).length;
+  var fc=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail+cost';}).length;},0);
+  var fails=subs.reduce(function(a,s){var items=s.items||{};return a+Object.keys(items).filter(function(k){return items[k]&&items[k].pm==='fail';}).length;},0);
+  var h='<div class="ph"><div class="ptitle">Reports</div></div>';
+  h+='<div class="mgrid"><div class="met"><div class="mlbl">Total submissions</div><div class="mval cb">'+total+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Approved</div><div class="mval cg">'+approved+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Fail+Cost flags</div><div class="mval ca">'+fc+'</div></div>';
+  h+='<div class="met"><div class="mlbl">Fail items total</div><div class="mval cr">'+fails+'</div></div></div>';
+  h+='<div class="twocol">';
+  /* Category performance */
+  h+='<div class="card"><div class="ctitle">Category performance</div>';
+  var catData=[];
+  CATS.forEach(function(c){
+    var cs=subs.filter(function(s){return s.category===c.id;});
+    if(!cs.length)return;
+    var sum=0;cs.forEach(function(s){sum+=getScore(s);});
+    catData.push({name:c.name,av:Math.round(sum/cs.length),count:cs.length});
+  });
+  catData.sort(function(a,b){return a.av-b.av;});
+  if(!catData.length)h+='<div class="empty" style="padding:20px"><div class="etxt">No data yet</div></div>';
+  else catData.forEach(function(c){
+    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:13px">'+c.name+'</span><span class="'+scCls(c.av)+'" style="font-weight:700">'+c.av+'%</span></div>';
+    h+='<div class="pb"><div class="pf '+pfCls(c.av)+'" style="width:'+c.av+'%"></div></div></div>';
+  });
+  h+='</div>';
+  /* Project scores */
+  h+='<div class="card"><div class="ctitle">Project scores</div>';
+  var projs=await sbGet('projects','select=*&order=created_at.desc');
+  if(!projs.length)h+='<div class="empty" style="padding:20px"><div class="etxt">No projects yet</div></div>';
+  else projs.forEach(function(p){
+    var ps=subs.filter(function(s){return s.project===p.name&&s.status!=='draft';});
+    var pct=Math.round(ps.length/12*100);
+    var avs=0;ps.forEach(function(s){avs+=getScore(s);});
+    var av=ps.length?Math.round(avs/ps.length):0;
+    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:13px;font-weight:700">'+p.name+'</span><span style="font-size:12px;color:var(--gray)">'+ps.length+'/12 '+(av?'<span class="'+scCls(av)+'" style="font-weight:700">'+av+'%</span>':'')+'</span></div>';
+    h+='<div class="pb"><div class="pf '+pfCls(pct)+'" style="width:'+pct+'%"></div></div></div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
+/* ── MANAGE USERS (Admin) ── */
+async function pgManageUsers(){
+  var users=await sbGet('users','select=*&order=name.asc');
+  var h='<div class="ph"><div class="ptitle">Manage users</div></div>';
+  h+='<div class="card"><div class="ctitle">All users <span class="chip">'+users.length+'</span></div>';
+  h+='<div class="tw"><table><thead><tr><th>Name</th><th>Role</th><th>Password</th></tr></thead><tbody>';
+  users.forEach(function(u){
+    h+='<tr><td style="font-weight:700">'+u.name+'</td><td><span class="bdg bi">'+roleLabel(u.role)+'</span></td><td style="font-family:monospace;font-size:12px">'+u.password+'</td></tr>';
+  });
+  h+='</tbody></table></div></div>';
+  h+='<div class="card" style="max-width:400px"><div class="ctitle">Reset password</div>';
+  h+='<div class="fg"><label>User name</label><select id="ru-name"><option value="">Select user...</option>';
+  users.forEach(function(u){h+='<option value="'+u.name+'">'+u.name+'</option>';});
+  h+='</select></div>';
+  h+='<div class="fg"><label>New password</label><input type="text" id="ru-pass" placeholder="New password" /></div>';
+  h+='<div id="ru-al"></div>';
+  h+='<button class="btn btnp" onclick="resetPw()">Reset password</button></div>';
+  return h;
+}
+
+async function resetPw(){
+  var name=document.getElementById('ru-name').value;
+  var pass=document.getElementById('ru-pass').value;
+  var al=document.getElementById('ru-al');
+  if(!name||!pass){al.innerHTML='<div class="al ald">Fill in both fields.</div>';return;}
+  var res=await sbPatch('users','name=eq.'+encodeURIComponent(name),{password:pass});
+  if(res)al.innerHTML='<div class="al als">Password updated for '+name+'.</div>';
+  else al.innerHTML='<div class="al ald">Failed. Try again.</div>';
+}
+</script>
+</body>
+</html>
